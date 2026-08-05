@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-sand-50 font-sans text-ink-700 antialiased;
+  }
+
+  /* Overskrifter i elegant serif (font-display) – rolig vekt, stram tracking,
+     god leding. Redaksjonelt og premium, aldri fet. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-medium text-ink-900;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+  }
+
+  /* Tydelig fokusmarkering for tilgjengelighet (tastaturnavigasjon). */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-sand-50;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  /* Konsistent vertikal rytme – samme luft mellom alle seksjoner. */
+  .section {
+    @apply py-24 sm:py-32;
+  }
+
+  /* Primær: rolig pille i varm espresso med kremtekst – på lyse flater. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-600
+      px-7 py-3.5 text-base font-medium text-sand-50 shadow-card transition-all
+      duration-300 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-soft
+      active:translate-y-0 active:scale-[0.99];
+  }
+
+  /* Hvit pille for bruk oppå bilder / mørke flater – mørk espresso-tekst. */
+  .btn-on-image {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sand-50
+      px-7 py-3.5 text-base font-medium text-brand-700 shadow-card transition-all
+      duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft
+      active:translate-y-0 active:scale-[0.99];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border
+      border-ink-900/15 bg-sand-50/90 px-7 py-3.5 text-base font-medium
+      text-ink-900 backdrop-blur transition-all duration-300 hover:-translate-y-0.5
+      hover:border-ink-900/30 hover:shadow-card;
+  }
+
+  /* Eyebrow / label – én konsistent stil på tvers av hele siden. Liten versal
+     i dempet varm brand, rolig sperret. Aldri flankert av dekorstreker. */
+  .eyebrow {
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-brand-600;
+  }
+
+  /* Samme eyebrow på mørke espresso-flater (hero, CTA). */
+  .eyebrow-light {
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-sand-100/80;
+  }
+
+  /* Seksjonstittel – elegant serif (font-display), rolig medium vekt, stram
+     tracking, god leding. */
+  .section-title {
+    @apply font-display text-4xl font-medium leading-[1.1] tracking-[-0.015em] sm:text-5xl;
+  }
+
+  .section-lead {
+    @apply mt-5 text-lg leading-relaxed text-ink-500;
+  }
+
+  /* Kort med dybde og elegant hover-løft. */
+  .card-lift {
+    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-soft;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,15 @@
+# Avhengigheter
+/node_modules
+
+# Next.js byggefiler
+/.next
+/out
+
+# Miljøvariabler (hemmelige nøkler)
+.env
+.env.local
+
+# Diverse
+.DS_Store
+*.log
+.vercel
