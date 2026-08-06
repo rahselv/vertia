@@ -38,26 +38,28 @@ export default function Trust() {
   return (
     <section className="section bg-sand-50">
       <div className="container-page">
-        {/* Sentrert, redaksjonell seksjonsintro. */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow mb-4">I media</p>
-          <h2 className="section-title">Vertia i media</h2>
-          <p className="section-lead mx-auto max-w-xl">
+        {/* Asymmetrisk, venstrestilt redaksjonell seksjonsintro. */}
+        <div className="grid items-end gap-6 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <p className="eyebrow mb-4">I media</p>
+            <h2 className="section-title max-w-xl">Vertia i media</h2>
+          </div>
+          <p className="text-lg leading-relaxed text-ink-500 lg:col-span-5 lg:pb-2">
             Et utvalg av hvordan arbeidet vårt blir omtalt – fortalt med samme ro
             som vi driver utleien.
           </p>
         </div>
 
         {/* «Omtalt i»-stripe med dempede serif-wordmarks på en rolig sandband. */}
-        <div className="mt-14 overflow-hidden rounded-[2rem] bg-white px-6 py-9 shadow-card ring-1 ring-ink-900/5 sm:px-10">
-          <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-ink-500">
+        <div className="mt-16 overflow-hidden border border-sand-200 bg-white px-6 py-9 sm:px-10">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-ink-500">
             Omtalt i
           </p>
-          <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 sm:gap-x-14">
+          <ul className="mt-7 flex flex-wrap items-center gap-x-10 gap-y-5 sm:gap-x-14">
             {publications.map((name) => (
               <li
                 key={name}
-                className="font-serif text-xl font-medium tracking-tight text-brand-600/70 transition-colors duration-300 hover:text-brand-600 sm:text-2xl"
+                className="font-serif text-xl font-medium tracking-tight text-brand-600/70 transition-colors duration-200 hover:text-brand-600 sm:text-2xl"
               >
                 {name}
               </li>

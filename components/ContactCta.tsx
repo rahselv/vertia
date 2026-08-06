@@ -4,7 +4,7 @@ export default function ContactCta() {
   return (
     <section id="kontakt" className="section bg-sand-50">
       <div className="container-page">
-        <div className="relative overflow-hidden rounded-[2rem] bg-brand-700 px-7 py-16 shadow-soft sm:px-12 sm:py-24">
+        <div className="relative overflow-hidden bg-brand-700 px-7 py-20 sm:px-12 sm:py-28">
           {/* Varmt skandinavisk interiør i gyllent lys som diskret full-bleed bakgrunn. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -14,10 +14,10 @@ export default function ContactCta() {
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover opacity-25"
           />
-          {/* Varm espresso-overlay som holder teksten rolig og lesbar. */}
+          {/* Flat espresso-overlay som holder teksten rolig og lesbar. */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-br from-brand-700/95 via-brand-700/90 to-brand-600/90"
+            className="absolute inset-0 bg-brand-700/90"
           />
           {/* Hårfint korn for samme redaksjonelle tekstur som i hero. */}
           <div
@@ -30,16 +30,16 @@ export default function ContactCta() {
             }}
           />
 
-          <div className="relative mx-auto max-w-2xl text-center">
+          <div className="relative max-w-2xl">
             <p className="eyebrow-light">Få et konkret tilbud</p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.03em] text-sand-50 sm:text-5xl">
+            <h2 className="mt-6 font-display text-5xl font-medium leading-[0.98] tracking-[-0.035em] text-sand-50 sm:text-6xl">
               La oss regne på akkurat din bolig
             </h2>
-            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-sand-100/85">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-sand-100/85">
               Legg igjen kontaktinfo, så tar vi en uforpliktende prat og gir deg
               et konkret inntektsanslag.
             </p>
-            <div className="mt-9">
+            <div className="mt-10">
               <ContactButton className="btn-on-image">
                 Få et tilbud
               </ContactButton>

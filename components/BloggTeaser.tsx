@@ -38,9 +38,8 @@ export default function BloggTeaser() {
           x: 0,
           transition: { duration: 0.35, ease: EASE },
         },
-        // Løft via framer (ikke CSS-transform), så det ikke kolliderer med
-        // slide-inn-transformen som ligger inline etter introen.
-        hover: { y: -6, transition: { duration: 0.35, ease: EASE } },
+        // Flat redaksjonell retning: ingen hover-løft.
+        hover: {},
       };
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -111,7 +110,7 @@ export default function BloggTeaser() {
                 onClick={() => scroll(-1)}
                 disabled={!kanVenstre}
                 aria-label="Forrige artikler"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ink-900/15 bg-white text-ink-900 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-30 disabled:shadow-none disabled:hover:translate-y-0"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-none border border-ink-900 bg-transparent text-ink-900 transition-colors duration-200 hover:bg-ink-900 hover:text-sand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-ink-900"
               >
                 <ChevronLeft className="h-5 w-5" strokeWidth={2} />
               </button>
@@ -120,7 +119,7 @@ export default function BloggTeaser() {
                 onClick={() => scroll(1)}
                 disabled={!kanHoyre}
                 aria-label="Neste artikler"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ink-900/15 bg-white text-ink-900 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-30 disabled:shadow-none disabled:hover:translate-y-0"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-none border border-ink-900 bg-transparent text-ink-900 transition-colors duration-200 hover:bg-ink-900 hover:text-sand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-ink-900"
               >
                 <ChevronRight className="h-5 w-5" strokeWidth={2} />
               </button>
@@ -128,7 +127,7 @@ export default function BloggTeaser() {
 
             <Link
               href="/artikler"
-              className="group inline-flex items-center gap-2 rounded-full border border-ink-900/15 px-5 py-2.5 text-sm font-medium text-ink-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900/30 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              className="group inline-flex items-center gap-2 rounded-none border border-ink-900 px-5 py-2.5 text-sm font-medium text-ink-900 transition-colors duration-200 hover:bg-ink-900 hover:text-sand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               Se alle artikler
               <ArrowRight
@@ -141,7 +140,7 @@ export default function BloggTeaser() {
 
         <div
           ref={trackRef}
-          className="mt-14 flex snap-x snap-mandatory gap-8 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-16 flex snap-x snap-mandatory gap-8 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {artikler.map((artikkel) => (
             <motion.article
@@ -152,7 +151,7 @@ export default function BloggTeaser() {
               whileInView="visible"
               whileHover={reduce ? undefined : "hover"}
               viewport={{ once: true, amount: 0.3 }}
-              className="group h-auto w-[80%] flex-none snap-start overflow-hidden rounded-3xl bg-sand-50 shadow-card ring-1 ring-ink-900/5 transition-shadow duration-300 hover:shadow-soft sm:w-[46%] lg:w-[31%]"
+              className="group h-auto w-[80%] flex-none snap-start overflow-hidden bg-sand-50 ring-1 ring-ink-900/[0.08] transition-colors duration-200 sm:w-[46%] lg:w-[31%]"
             >
               <Link
                   href={`/artikler/${artikkel.slug}`}
@@ -165,7 +164,7 @@ export default function BloggTeaser() {
                       src={artikkel.bilde}
                       alt={artikkel.bildeAlt}
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                      className="h-full w-full object-cover"
                     />
                   </div>
 
