@@ -59,12 +59,12 @@ export default function PricingTiers({ packages }: { packages: Pkg[] }) {
             className="h-full"
           >
             <div
-              className={`relative flex h-full flex-col items-center text-center rounded-[2rem] p-8 transition-all duration-300 ease-out sm:p-9 ${
+              className={`relative flex h-full flex-col items-center text-center p-8 transition-colors duration-200 ease-out sm:p-9 ${
                 pkg.popular ? "lg:py-11" : ""
               } ${
                 dark
-                  ? "bg-brand-600 text-sand-50 shadow-soft lg:scale-[1.04]"
-                  : "border border-sand-200 bg-sand-50 text-ink-900 shadow-card hover:-translate-y-1 hover:shadow-soft"
+                  ? "bg-brand-600 text-sand-50 lg:scale-[1.04]"
+                  : "border border-sand-200 bg-sand-50 text-ink-900"
               }`}
             >
               {pkg.popular && (

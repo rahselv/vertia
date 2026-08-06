@@ -91,7 +91,7 @@ export default function DynamicPricingReveal() {
 
   return (
     <motion.div
-      className="mt-6 overflow-hidden rounded-[2rem] border border-sand-200 bg-sand-50 shadow-card"
+      className="mt-16 overflow-hidden border border-sand-200 bg-sand-50"
       variants={sectionVariants}
       initial="hidden"
       whileInView="show"
@@ -125,15 +125,15 @@ export default function DynamicPricingReveal() {
             className="mt-6 flex flex-wrap gap-x-6 gap-y-2.5 text-sm text-ink-700"
           >
             <span className="flex items-center gap-2">
-              <span className="h-3.5 w-3.5 rounded-[5px] bg-brand-600" />
+              <span className="h-3.5 w-3.5 bg-brand-600" />
               Høy verdi (helg / arrangement)
             </span>
             <span className="flex items-center gap-2">
-              <span className="h-3.5 w-3.5 rounded-[5px] border border-sand-200 bg-white" />
+              <span className="h-3.5 w-3.5 border border-sand-200 bg-white" />
               Vanlig dag (ordinær pris)
             </span>
             <span className="flex items-center gap-2">
-              <span className="h-3.5 w-3.5 rounded-[5px] bg-sand-100" />
+              <span className="h-3.5 w-3.5 bg-sand-100" />
               Lavere verdi
             </span>
           </motion.div>

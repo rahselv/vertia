@@ -300,16 +300,18 @@ export default function Calculator({
   return (
     <section id="kalkulator" className="section bg-sand-50">
       <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow mb-4">Inntektsestimat</p>
-          <h2 className="section-title">Hva kan boligen din tjene?</h2>
-          <p className="section-lead mx-auto max-w-xl">
+        <div className="grid items-end gap-6 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <p className="eyebrow mb-4">Inntektsestimat</p>
+            <h2 className="section-title max-w-xl">Hva kan boligen din tjene?</h2>
+          </div>
+          <p className="text-lg leading-relaxed text-ink-500 lg:col-span-5 lg:pb-2">
             Legg igjen adresse og e-post, så regner vi på nettopp din bolig og
             sender deg et konkret inntektsestimat.
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-xl rounded-3xl border border-sand-200 bg-white p-7 shadow-soft sm:p-9">
+        <div className="mt-16 max-w-xl border border-sand-200 bg-white p-7 sm:p-9">
           {status === "success" ? (
             <div className="py-6 text-center" role="status" aria-live="polite">
               <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-600 text-sand-50">

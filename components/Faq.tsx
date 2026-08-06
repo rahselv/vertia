@@ -37,17 +37,20 @@ export default function Faq() {
   return (
     <section id="faq" className="section bg-sand-100">
       <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow mb-4">Spørsmål og svar</p>
-          <h2 className="section-title">Ofte stilte spørsmål</h2>
-        </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <p className="eyebrow mb-4">Spørsmål og svar</p>
+              <h2 className="section-title">Ofte stilte spørsmål</h2>
+            </div>
+          </div>
 
-        <div className="mx-auto mt-14 max-w-3xl border-t border-ink-900/10">
-          {faqs.map((faq) => (
-            <details
-              key={faq.question}
-              className="group border-b border-ink-900/10"
-            >
+          <div className="border-t border-ink-900/10 lg:col-span-8">
+            {faqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group border-b border-ink-900/10"
+              >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-6 text-base font-medium text-ink-900 transition-colors duration-200 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600/40 focus-visible:ring-offset-4 focus-visible:ring-offset-sand-100">
                 {faq.question}
                 <ChevronDown
@@ -56,11 +59,12 @@ export default function Faq() {
                   className="h-5 w-5 flex-none text-ink-500 transition-transform duration-300 ease-out group-hover:text-brand-700 group-open:rotate-180"
                 />
               </summary>
-              <p className="max-w-2xl pb-6 leading-relaxed text-ink-700">
-                {faq.answer}
-              </p>
-            </details>
-          ))}
+                <p className="max-w-2xl pb-6 leading-relaxed text-ink-700">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </div>
     </section>

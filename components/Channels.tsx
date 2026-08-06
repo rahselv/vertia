@@ -80,9 +80,9 @@ export default function Channels() {
   return (
     <section className="section bg-sand-100">
       <div className="container-page">
-        <Reveal className="mx-auto max-w-2xl text-center">
+        <Reveal className="max-w-xl">
           <p className="eyebrow mb-4">Hvor vi annonserer</p>
-          <p className="section-lead mx-auto max-w-lg text-balance">
+          <p className="section-lead text-balance">
             Vi publiserer boligen din på kanalene som gir flest bookinger.
           </p>
         </Reveal>
@@ -90,13 +90,13 @@ export default function Channels() {
         {/* Rolig, jevnt fordelt logo-stripe på en varm flate med hårfine
             kolonneskiller. Ekte merkefarger per logo, diskret hover-løft. */}
         <Reveal delay={0.1}>
-          <ul className="mx-auto mt-12 grid max-w-4xl grid-cols-2 overflow-hidden rounded-[2rem] bg-sand-50 shadow-soft ring-1 ring-brand-600/5 sm:mt-14 sm:grid-cols-4">
+          <ul className="mt-16 grid grid-cols-2 overflow-hidden border border-sand-200 bg-sand-50 sm:grid-cols-4">
             {channels.map((channel, index) => (
               <li
                 key={channel.name}
                 aria-label={channel.name}
                 className={[
-                  "flex h-28 items-center justify-center px-6 opacity-90 transition-all duration-300 hover:-translate-y-0.5 hover:opacity-100 sm:h-32",
+                  "flex h-28 items-center justify-center px-6 opacity-90 transition-opacity duration-200 hover:opacity-100 sm:h-32",
                   // Hårfine, varme skiller: topp-kant på nederste rad (mobil),
                   // venstre-kant mellom kolonner (desktop).
                   index >= 2 ? "border-t border-sand-200 sm:border-t-0" : "",

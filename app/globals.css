@@ -13,14 +13,20 @@
   }
 
   /* Overskrifter i elegant serif (font-display) – rolig vekt, stram tracking,
-     god leding. Redaksjonelt og premium, aldri fet. */
+     tett leding. Redaksjonelt og premium, aldri fet. Optisk kerning og
+     ligaturer slås på for et trykt, forseggjort preg. */
   h1,
   h2,
   h3,
   h4 {
     @apply font-display font-medium text-ink-900;
-    letter-spacing: -0.015em;
-    line-height: 1.12;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+    text-wrap: balance;
+    font-kerning: normal;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern", "liga", "calt";
+    text-rendering: optimizeLegibility;
   }
 
   /* Tydelig fokusmarkering for tilgjengelighet (tastaturnavigasjon). */
@@ -34,58 +40,58 @@
     @apply mx-auto w-full max-w-content px-5 sm:px-8;
   }
 
-  /* Konsistent vertikal rytme – samme luft mellom alle seksjoner. */
+  /* Konsistent vertikal rytme – tredoblet luft mellom seksjonene. La ting
+     puste; whitespace bærer det redaksjonelle uttrykket. */
   .section {
-    @apply py-24 sm:py-32;
+    @apply py-40 sm:py-56 lg:py-64;
   }
 
-  /* Primær: rolig pille i varm espresso med kremtekst – på lyse flater. */
+  /* Primær: flat, skarp knapp i dyp espresso med kremtekst. Høy kontrast,
+     ingen skygge/heving – kun farge endres på hover. */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-600
-      px-7 py-3.5 text-base font-medium text-sand-50 shadow-card transition-all
-      duration-300 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-soft
-      active:translate-y-0 active:scale-[0.99];
+    @apply inline-flex items-center justify-center gap-2 rounded-none bg-brand-600
+      px-8 py-4 text-base font-medium text-sand-50 transition-colors duration-200
+      hover:bg-brand-700;
   }
 
-  /* Hvit pille for bruk oppå bilder / mørke flater – mørk espresso-tekst. */
+  /* Flat, skarp lys knapp for bruk oppå bilder / mørke flater. */
   .btn-on-image {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sand-50
-      px-7 py-3.5 text-base font-medium text-brand-700 shadow-card transition-all
-      duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft
-      active:translate-y-0 active:scale-[0.99];
+    @apply inline-flex items-center justify-center gap-2 rounded-none bg-sand-50
+      px-8 py-4 text-base font-medium text-brand-700 transition-colors duration-200
+      hover:bg-white;
   }
 
+  /* Flat, skarp omriss-knapp med høy kontrast – fyller på hover. */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border
-      border-ink-900/15 bg-sand-50/90 px-7 py-3.5 text-base font-medium
-      text-ink-900 backdrop-blur transition-all duration-300 hover:-translate-y-0.5
-      hover:border-ink-900/30 hover:shadow-card;
+    @apply inline-flex items-center justify-center gap-2 rounded-none border
+      border-ink-900 bg-transparent px-8 py-4 text-base font-medium text-ink-900
+      transition-colors duration-200 hover:bg-ink-900 hover:text-sand-50;
   }
 
   /* Eyebrow / label – én konsistent stil på tvers av hele siden. Liten versal
      i dempet varm brand, rolig sperret. Aldri flankert av dekorstreker. */
   .eyebrow {
-    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-brand-600;
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-brand-600;
   }
 
   /* Samme eyebrow på mørke espresso-flater (hero, CTA). */
   .eyebrow-light {
-    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-sand-100/80;
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-sand-100/80;
   }
 
-  /* Seksjonstittel – elegant serif (font-display), rolig medium vekt, stram
-     tracking, god leding. */
+  /* Seksjonstittel – stor, skarp serif med tett leding og stram optisk
+     tracking. Skal ha tydelig sprang i skala fra eyebrow og brødtekst. */
   .section-title {
-    @apply font-display text-4xl font-medium leading-[1.1] tracking-[-0.015em] sm:text-5xl;
+    @apply font-display text-5xl font-medium leading-[0.98] tracking-[-0.035em] sm:text-6xl;
   }
 
   .section-lead {
-    @apply mt-5 text-lg leading-relaxed text-ink-500;
+    @apply mt-6 text-lg leading-relaxed text-ink-500;
   }
 
-  /* Kort med dybde og elegant hover-løft. */
+  /* Flat kort – ingen løft, ingen skygge. Kun farge kan endres. */
   .card-lift {
-    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-soft;
+    @apply transition-colors duration-200;
   }
 }
 

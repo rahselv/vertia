@@ -69,7 +69,7 @@ export default function Statement() {
               return (
                 <div
                   key={stat.label}
-                  className="rounded-[1.75rem] bg-sand-50/[0.04] p-7 ring-1 ring-inset ring-sand-50/10 transition-colors duration-300 hover:bg-sand-50/[0.06] sm:p-8"
+                  className="bg-sand-50/[0.04] p-7 ring-1 ring-inset ring-sand-50/10 transition-colors duration-200 hover:bg-sand-50/[0.06] sm:p-8"
                 >
                   <Icon
                     className="h-6 w-6 text-sand-200/70"
