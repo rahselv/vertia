@@ -62,31 +62,12 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Rolig, varm gradient: mørk nok til venstre for lesbar hvit tekst, men
-          fader til nesten klart mot høyre slik at SELVE BILDET tydelig kommer
-          fram (møblement/lys), akkurat som i mockup-et. Aldri flatt/kaldt. */}
+      {/* Flat, jevn espresso-scrim som holder den hvite teksten lesbar uten
+          gradient eller glow – ett rolig lag, ikke et effekt-triks. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-900/80 via-ink-900/45 to-ink-900/5"
+        className="absolute inset-0 -z-10 bg-ink-900/50"
       />
-      {/* Diskret topp/bunn-dybde for ro i kantene – lett, ikke tildekkende. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-900/55 via-transparent to-ink-900/15"
-      />
-      {/* Diskret, langsomt drivende lysflekk – gir bildet et levende, mykt liv. */}
-      {!reduceMotion && (
-        <motion.div
-          aria-hidden
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(60% 55% at 28% 35%, rgba(255,247,238,0.10), transparent 70%)",
-          }}
-          animate={{ opacity: [0.55, 0.9, 0.55], scale: [1, 1.06, 1] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-        />
-      )}
       {/* Hårfint korn. */}
       <div
         aria-hidden
@@ -110,7 +91,7 @@ export default function Hero() {
             variants={item}
             className="mt-8 font-display text-white [text-wrap:balance]"
           >
-            <span className="block text-[2.7rem] font-medium leading-[1.02] tracking-[-0.03em] sm:text-[3.5rem] md:text-[4.1rem] lg:text-[4.5rem]">
+            <span className="block text-[2.9rem] font-medium leading-[0.96] tracking-[-0.045em] sm:text-[3.75rem] md:text-[4.4rem] lg:text-[4.9rem]">
               Tjen penger på boligen
               <br className="hidden sm:block" /> når den står stille.
             </span>
@@ -137,7 +118,7 @@ export default function Hero() {
             </a>
             <a
               href="#slik-fungerer-det"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-base font-medium text-white backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-none border border-white/60 bg-transparent px-8 py-4 text-base font-medium text-white transition-colors duration-200 hover:bg-white hover:text-brand-700 sm:w-auto"
             >
               Slik fungerer det
             </a>

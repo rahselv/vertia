@@ -58,7 +58,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
         solid ? "sticky top-0" : "fixed inset-x-0 top-0"
       } z-40 border-b motion-safe:transition-[background-color,border-color,backdrop-filter] motion-safe:duration-500 motion-safe:ease-out ${
         isSolid
-          ? "border-sand-200/70 bg-sand-50/85 backdrop-blur"
+          ? "border-sand-200 bg-sand-50"
           : "border-transparent bg-transparent"
       }`}
     >
@@ -95,7 +95,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
             className={
               isSolid
                 ? "btn-primary !px-5 !py-2.5 text-sm"
-                : "inline-flex items-center justify-center rounded-full border border-white/35 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20"
+                : "inline-flex items-center justify-center rounded-none border border-white/60 bg-transparent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-brand-700"
             }
           >
             Kontakt oss
@@ -127,7 +127,7 @@ export default function Header({ solid = false }: { solid?: boolean }) {
       {menuOpen && (
         <nav
           id="mobil-meny"
-          className="border-t border-sand-200 bg-sand-50/95 backdrop-blur md:hidden"
+          className="border-t border-sand-200 bg-sand-50 md:hidden"
         >
           <ul className="container-page flex flex-col py-2">
             {navLinks.map((link) => (

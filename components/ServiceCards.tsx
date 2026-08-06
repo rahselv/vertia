@@ -83,10 +83,10 @@ export default function ServiceCards() {
         const cardVariants = makeReveal(direction, {
           reduce,
           mobile,
-          hover: true,
+          hover: false,
           delay: index * 0.15,
         });
-        const imageVariants = makeImageReveal(reduce, true);
+        const imageVariants = makeImageReveal(reduce, false);
         const iconVariants = makeIconItem(reduce, 0.15);
         const titleVariants = makeContentItem(reduce, 0.22);
         const descVariants = makeContentItem(reduce, 0.29);
@@ -98,10 +98,9 @@ export default function ServiceCards() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            whileHover={reduce ? undefined : "hover"}
             className="group list-none w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
           >
-            <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-sand-200 bg-sand-50 shadow-card transition-[box-shadow,border-color] duration-300 ease-out group-hover:border-sand-300 group-hover:shadow-soft">
+            <div className="flex h-full flex-col overflow-hidden border border-sand-200 bg-sand-50 transition-colors duration-200 ease-out group-hover:border-sand-300">
               {/* Bilde: overflow-hidden wrapper, imageReveal (scale 1.08→1) +
                   diskret hover-zoom. Alt via framer, ingen CSS-transform-kollisjon. */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -118,7 +117,7 @@ export default function ServiceCards() {
               <div className="flex flex-1 flex-col p-7">
                 <motion.span
                   variants={iconVariants}
-                  className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-sand-50 shadow-sm"
+                  className="flex h-12 w-12 items-center justify-center bg-brand-600 text-sand-50"
                 >
                   <item.Icon className="h-6 w-6" strokeWidth={1.75} />
                 </motion.span>

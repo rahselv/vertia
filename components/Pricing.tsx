@@ -48,16 +48,18 @@ export default function Pricing() {
   return (
     <section id="priser" className="section bg-sand-100">
       <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
-          <RevealText as="p" className="eyebrow mb-4">
-            Pakker og priser
-          </RevealText>
-          <RevealText as="h2" className="section-title" delay={0.08}>
-            Velg den pakken som passer deg
-          </RevealText>
+        <div className="grid items-end gap-6 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <RevealText as="p" className="eyebrow mb-4">
+              Pakker og priser
+            </RevealText>
+            <RevealText as="h2" className="section-title max-w-xl" delay={0.08}>
+              Velg den pakken som passer deg
+            </RevealText>
+          </div>
           <RevealText
             as="p"
-            className="section-lead mx-auto max-w-xl"
+            className="text-lg leading-relaxed text-ink-500 lg:col-span-5 lg:pb-2"
             delay={0.16}
           >
             Kommisjon, ingen skjulte kostnader.
@@ -65,7 +67,7 @@ export default function Pricing() {
         </div>
 
         {/* ── Oppstartspakken: alltid i tillegg, kompakt stripe øverst ─────── */}
-        <div className="mx-auto mt-16 max-w-5xl overflow-hidden rounded-[2rem] bg-brand-600 text-sand-50 shadow-soft">
+        <div className="mx-auto mt-16 max-w-5xl overflow-hidden bg-brand-600 text-sand-50">
           <div className="p-7 sm:p-9">
             {/* Topplinje: pakke-info til venstre, pris til høyre */}
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

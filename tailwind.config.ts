@@ -40,17 +40,24 @@ const config: Config = {
         serif: ["var(--font-display)", "Playfair Display", "Georgia", "serif"],
       },
       borderRadius: {
-        xl: "0.875rem",
-        "2xl": "1.25rem",
-        "3xl": "1.75rem",
+        // Skandinavisk redaksjonell retning: skarpe kanter. Ingen radius over
+        // 4px noe sted – alle tokens (inkl. `full`) kappes til maks 4px.
+        DEFAULT: "4px",
+        sm: "2px",
+        md: "4px",
+        lg: "4px",
+        xl: "4px",
+        "2xl": "4px",
+        "3xl": "4px",
+        full: "4px",
       },
       maxWidth: {
         content: "75rem",
       },
       boxShadow: {
-        // Varme, myke skygger (espresso-tonet, aldri kald grå/svart).
-        soft: "0 18px 50px -20px rgba(58, 47, 40, 0.28)",
-        card: "0 10px 30px -16px rgba(58, 47, 40, 0.22)",
+        // Flat redaksjonell flate – ingen skygger, ingen dybde-triks.
+        soft: "none",
+        card: "none",
       },
       keyframes: {
         "fade-up": {

@@ -72,7 +72,7 @@ export default function PropertyCarousel() {
           {examples.map((ex) => (
             <div
               key={ex.title}
-              className="flex flex-col overflow-hidden rounded-[1.5rem] bg-white text-left shadow-soft ring-1 ring-ink-900/[0.06]"
+              className="flex flex-col overflow-hidden bg-white text-left ring-1 ring-ink-900/[0.08]"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -83,7 +83,7 @@ export default function PropertyCarousel() {
                   className="h-full w-full object-cover"
                 />
                 {/* Tydelig «Eksempel»-merke øverst til venstre. */}
-                <span className="absolute left-4 top-4 inline-flex items-center rounded-full bg-sand-50/90 px-3 py-1 text-xs font-semibold text-ink-900 shadow-soft backdrop-blur-sm">
+                <span className="absolute left-4 top-4 inline-flex items-center bg-sand-50 px-3 py-1 text-xs font-semibold text-ink-900">
                   Eksempel
                 </span>
               </div>
@@ -125,7 +125,7 @@ export default function PropertyCarousel() {
         </div>
 
         {/* Åpen salgsannonse mot boligeiere, rett under eksempelkortene. */}
-        <div className="mt-12 rounded-[2rem] border border-sand-200 bg-white p-8 shadow-card sm:p-10">
+        <div className="mt-16 border border-sand-200 bg-white p-8 sm:p-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
             <div className="max-w-xl">
               <p className="eyebrow mb-3">Plass til flere</p>
