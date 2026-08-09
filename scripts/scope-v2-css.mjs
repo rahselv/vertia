@@ -172,6 +172,29 @@ const ADDITIONS = `
 
 /* Korn-tekstur: settes med JS i designet, statisk her. */
 ${SCOPE} .grain{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* Mobilmeny. Designet har ingen: nav-en er display:none under 960px uten noe
+   alternativ, så på mobil sto man igjen med kun «Kontakt oss». Vi beholder
+   hamburgeren fra v1. Stilene ligger her fordi de ikke finnes i designfila. */
+${SCOPE} .hdr-right{display:flex;align-items:center;gap:6px}
+${SCOPE} .hdr-burger{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:0;border-radius:50%;background:none;color:#fff;cursor:pointer;transition:color .3s,background-color .3s}
+${SCOPE} .hdr-burger:hover{background:rgba(255,255,255,.16)}
+${SCOPE} .hdr.solid .hdr-burger{color:var(--ink-900)}
+${SCOPE} .hdr.solid .hdr-burger:hover{background:var(--sand-200)}
+@media(min-width:960px){${SCOPE} .hdr-burger,${SCOPE} .hdr-mob{display:none}}
+${SCOPE} .hdr-mob{background:rgba(251,248,243,.97);backdrop-filter:blur(10px);border-top:1px solid var(--sand-200)}
+${SCOPE} .hdr-mob ul{max-width:var(--maxw);margin:0 auto;padding:6px var(--edge) 14px;list-style:none;display:flex;flex-direction:column}
+${SCOPE} .hdr-mob a{display:block;padding:13px 0;font-size:.95rem;font-weight:500;color:var(--ink-700);border-bottom:1px solid var(--sand-200)}
+${SCOPE} .hdr-mob li:last-child a{border-bottom:0}
+${SCOPE} .hdr-mob a:hover{color:var(--acc)}
+
+/* Bekreftelse etter innsendt skjema. Designet bytter ut skjemaet med inline
+   stiler i JS; vi gjør det med klasser i stedet. */
+${SCOPE} .form-ok{margin:26px 0 0;line-height:1.7;color:var(--ink-500)}
+${SCOPE} .form-err{margin:18px 0 0;font-size:.88rem;line-height:1.6;color:var(--acc)}
+${SCOPE} .cta .form-ok{color:rgba(250,246,238,.8);font-size:1.1rem;margin-top:52px}
+${SCOPE} .cta .form-ok strong{color:var(--cream)}
+${SCOPE} .cta .form-err{color:var(--acc-lt)}
 `;
 
 const HEADER = `/**
