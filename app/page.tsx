@@ -1,29 +1,26 @@
 import RevealController from "@/components/v2/RevealController";
 import HeaderV2 from "@/components/v2/Header";
 import HeroV2 from "@/components/v2/Hero";
+import ChannelsV2 from "@/components/v2/Channels";
+import PropertiesV2 from "@/components/v2/Properties";
 import CalculatorV2 from "@/components/v2/Calculator";
 import HowItWorksV2 from "@/components/v2/HowItWorks";
 import ManifestoV2 from "@/components/v2/Manifesto";
 import PricingV2 from "@/components/v2/Pricing";
+import ArticlesV2 from "@/components/v2/Articles";
 import FaqV2 from "@/components/v2/Faq";
 import ContactCtaV2 from "@/components/v2/ContactCta";
 import FooterV2 from "@/components/v2/Footer";
 
-// Midlertidig fra v1 – erstattes av v2-versjoner i etappe 3 (marquee).
-import Channels from "@/components/Channels";
-import PropertyCarousel from "@/components/PropertyCarousel";
-import BloggTeaser from "@/components/BloggTeaser";
-
 /**
  * Forsiden – landingsside v2.
  *
- * Seksjonene som er portet til v2 ligger inne i `.vertia-v2`-wrappere. Alt
- * design fra vertia-v2.css er scopet til den klassen, så seksjonene som ennå
- * ikke er portet må ligge UTENFOR wrapperen – ellers ville v2-reglene for
- * `.section`, `.btn-primary` og `h1–h3` overstyrt v1-stilene deres.
+ * Hele siden ligger i én `.vertia-v2`-wrapper. Alt design fra vertia-v2.css er
+ * scopet til den klassen, så resten av nettstedet (artikler, /om-oss,
+ * /personvern, /vilkar) er upåvirket og bruker fortsatt v1-stilene.
  *
- * v1-komponentene er bare koblet fra etter hvert som de erstattes; filene blir
- * liggende til v2 er verifisert.
+ * v1-komponentene for de erstattede seksjonene ligger fortsatt i components/,
+ * bare koblet fra her.
  */
 export default function Home() {
   return (
@@ -32,35 +29,21 @@ export default function Home() {
 
       <div className="vertia-v2">
         <HeaderV2 />
-      </div>
 
-      <main>
-        <div className="vertia-v2">
+        <main>
           <HeroV2 />
-        </div>
-
-        {/* Etappe 3 erstatter disse to med v2-versjoner. */}
-        <Channels />
-        <PropertyCarousel />
-
-        <div className="vertia-v2">
+          <ChannelsV2 />
+          <PropertiesV2 />
           <CalculatorV2 />
           <HowItWorksV2 />
           {/* Etappe 4: fremvisningen kommer her. */}
           <ManifestoV2 />
           <PricingV2 />
-        </div>
-
-        {/* Etappe 3 erstatter denne med v2-versjon. */}
-        <BloggTeaser />
-
-        <div className="vertia-v2">
+          <ArticlesV2 />
           <FaqV2 />
           <ContactCtaV2 />
-        </div>
-      </main>
+        </main>
 
-      <div className="vertia-v2">
         <FooterV2 />
       </div>
     </>

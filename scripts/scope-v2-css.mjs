@@ -188,6 +188,15 @@ ${SCOPE} .hdr-mob a{display:block;padding:13px 0;font-size:.95rem;font-weight:50
 ${SCOPE} .hdr-mob li:last-child a{border-bottom:0}
 ${SCOPE} .hdr-mob a:hover{color:var(--acc)}
 
+/* Kanal-logoer. Designet la disse som inline style-attributter på hver <span>;
+   her er de klasser, så markupen holder seg lesbar. Merkefargene er uendret. */
+${SCOPE} .mq-airbnb{font:600 1.6rem/1 var(--sans);letter-spacing:-.03em;color:#FF385C}
+${SCOPE} .mq-booking{font:700 1.45rem/1 var(--sans);letter-spacing:-.02em;color:#003580}
+${SCOPE} .mq-booking i{font-style:normal;font-weight:500;color:#009FE3}
+${SCOPE} .mq-vrbo{font:700 1.55rem/1 var(--sans);letter-spacing:-.02em;color:#1668E3}
+${SCOPE} .mq-finn{font:800 1.5rem/1 var(--sans);color:#0063FB}
+${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
+
 /* Bekreftelse etter innsendt skjema. Designet bytter ut skjemaet med inline
    stiler i JS; vi gjør det med klasser i stedet. */
 ${SCOPE} .form-ok{margin:26px 0 0;line-height:1.7;color:var(--ink-500)}
