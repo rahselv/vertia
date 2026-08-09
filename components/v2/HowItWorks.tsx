@@ -27,9 +27,9 @@ export default function HowItWorksV2() {
       <div className="wrap">
         <div className="sec-head sec-row rv">
           <div>
-            <h2 className="sec-title">
-              Fra første prat til <em>penger på konto</em>
-            </h2>
+            {/* Uten <em>: designet setter kursiv på em i overskrifter, og
+                «penger på konto» skal stå rett. */}
+            <h2 className="sec-title">Fra første prat til penger på konto</h2>
           </div>
           <p className="sec-lead">
             Vi gjør jobben i fire enkle steg. Du beholder boligen, kontrollen og

@@ -42,9 +42,16 @@ function fitProps(image: ShowcaseImage) {
 
 /**
  * Scenen er maks 1180 px bred, og bildet litt bredere enn den igjen (zoom).
- * Rundet opp til 1300 px på store skjermer.
+ *
+ * På telefon oppgir vi bevisst en mindre bredde enn bildet faktisk dekker.
+ * Nettleseren ganger opp med skjermens pikselforhold, så en ærlig 115vw ville
+ * gitt 1920 px-varianten på en 3x-telefon. Da må mobilen dekode og komponere
+ * en 1920x1280 bitmap for hver frame mens man panorerer, og det er en stor del
+ * av tregheten. 70vw lander på 828 px-varianten. Litt mykere på de skarpeste
+ * skjermene, men merkbart jevnere bevegelse – og dette er demofoto.
  */
-const SIZES = "(min-width: 1240px) 1300px, 115vw";
+const SIZES =
+  "(min-width: 1240px) 1300px, (min-width: 640px) 100vw, 70vw";
 
 /**
  * Demofotoene er dekorative og delvis utenfor synsfeltet til enhver tid, så vi
@@ -416,25 +423,6 @@ export default function ShowcaseV2() {
               style={{ ...fitProps(current).fitStyle, opacity: loaded ? 1 : 0 }}
             />
 
-            {neighbours.map((image) => (
-              <Image
-                key={`forhandslast-${image.src}`}
-                src={image.src}
-                width={image.width}
-                height={image.height}
-                sizes={SIZES}
-                quality={QUALITY}
-                alt=""
-                aria-hidden="true"
-                // Lat lasting ville gjort forhandslastingen meningslos.
-                loading="eager"
-                data-preload="true"
-                data-kx={0}
-                data-ky={0}
-                style={{ ...fitProps(image).fitStyle, opacity: 0 }}
-              />
-            ))}
-
             <button
               type="button"
               className="fv-nav prev"
@@ -506,6 +494,26 @@ export default function ShowcaseV2() {
             {hintVisible && (
               <span className="fv-hint">Dra for å se deg rundt</span>
             )}
+          </div>
+
+          {/* Forhåndslastingene ligger UTENFOR scenen. Lå de inni, ville de
+              blitt med i pan-løkken og fått hver sin transform per frame – fem
+              store lag å komponere i stedet for to. Beholderen har høyde 0,
+              men full bredde, som er det srcset trenger for å velge variant. */}
+          <div className="fv-preload" aria-hidden="true">
+            {neighbours.map((image) => (
+              <Image
+                key={`forhandslast-${image.src}`}
+                src={image.src}
+                width={image.width}
+                height={image.height}
+                sizes={SIZES}
+                quality={QUALITY}
+                alt=""
+                // Lat lasting ville gjort forhåndslastingen meningsløs.
+                loading="eager"
+              />
+            ))}
           </div>
 
           <div className="fv-rooms" role="group" aria-label="Velg rom">

@@ -497,11 +497,11 @@
   .vertia-v2 .hero-cta{margin-top:26px;gap:10px;grid-template-columns:1fr}
   .vertia-v2 .hero-cta .btn{width:100%;padding:12px 18px;font-size:.85rem}
 
-  /* Punktene på én linje med prikk mellom, ikke stablet. Designet brukte en
-     loddrett strek med 22 px luft på hver side, som ble altfor bredt her. */
-  .vertia-v2 .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0;font-size:.7rem}
+  /* Punktene på én linje, uten skilletegn. Designet brukte en loddrett strek
+     med 22 px luft på hver side, som ble altfor bredt her; luft alene holder. */
+  .vertia-v2 .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0 14px;font-size:.7rem}
   .vertia-v2 .hero-badges li{white-space:nowrap}
-  .vertia-v2 .hero-badges li+li::before{content:"·";width:auto;height:auto;background:none;margin:0 7px;color:rgba(255,255,255,.55)}
+  .vertia-v2 .hero-badges li+li::before{display:none}
 
   .vertia-v2 .hdr-in{height:60px}
   .vertia-v2 .btn{padding:13px 22px;font-size:.85rem}
@@ -560,6 +560,28 @@
    (standard 108 %), fordi noen motiver tåler mindre zoom enn andre. */
 .vertia-v2 .fv-stage{aspect-ratio:3/2}
 @media(max-width:640px){.vertia-v2 .fv-stage{aspect-ratio:3/2}}
+
+/* ── Panorering på touch ────────────────────────────────────────────────────
+   Designet hadde touch-action: pan-y. Da holder nettleseren igjen hver
+   bevegelse til den har avgjort om det er sidescroll eller et dra – og den
+   ventingen føles nøyaktig som at bildet henger etter fingeren.
+
+   none gir oss bevegelsen umiddelbart. Prisen er at man ikke lenger kan
+   scrolle siden ved å dra PÅ selve bildet; man må ta i kanten utenfor.
+   Scenen er ca. 240 px høy på telefon, så det er en liten flate å miste. */
+.vertia-v2 .fv-stage{touch-action:none}
+
+/* will-change løfter elementet til et eget GPU-lag. Designet hadde det stående
+   permanent på hvert bilde, noe som binder minne på telefonen hele tiden.
+   Vi slår det på først når draget faktisk er i gang. */
+.vertia-v2 .fv-stage img{will-change:auto}
+.vertia-v2 .fv-stage.dragging img{will-change:transform}
+
+/* Forhåndslastede bilder ligger utenfor scenen, så de verken males eller
+   transformeres per frame. Beholderen har høyde 0, men full bredde – bredden
+   er det srcset bruker for å velge riktig variant. */
+.vertia-v2 .fv-preload{position:relative;width:100%;height:0;overflow:hidden;pointer-events:none}
+.vertia-v2 .fv-preload img{position:absolute;left:0;top:0;width:100%;height:auto;opacity:0}
 
 /* Punktlista i nøkkelboks-modalen står uten strek foran punktene. Designet
    tegnet en liten vannrett strek med ::before; her er det ren tekst. */

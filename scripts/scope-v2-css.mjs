@@ -269,11 +269,11 @@ ${SCOPE} .prop h3,${SCOPE} .post h3{font-size:clamp(1.25rem,1.7vw,1.5rem)}
   ${SCOPE} .hero-cta{margin-top:26px;gap:10px;grid-template-columns:1fr}
   ${SCOPE} .hero-cta .btn{width:100%;padding:12px 18px;font-size:.85rem}
 
-  /* Punktene på én linje med prikk mellom, ikke stablet. Designet brukte en
-     loddrett strek med 22 px luft på hver side, som ble altfor bredt her. */
-  ${SCOPE} .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0;font-size:.7rem}
+  /* Punktene på én linje, uten skilletegn. Designet brukte en loddrett strek
+     med 22 px luft på hver side, som ble altfor bredt her; luft alene holder. */
+  ${SCOPE} .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0 14px;font-size:.7rem}
   ${SCOPE} .hero-badges li{white-space:nowrap}
-  ${SCOPE} .hero-badges li+li::before{content:"·";width:auto;height:auto;background:none;margin:0 7px;color:rgba(255,255,255,.55)}
+  ${SCOPE} .hero-badges li+li::before{display:none}
 
   ${SCOPE} .hdr-in{height:60px}
   ${SCOPE} .btn{padding:13px 22px;font-size:.85rem}
@@ -332,6 +332,28 @@ ${SCOPE} .prop h3,${SCOPE} .post h3{font-size:clamp(1.25rem,1.7vw,1.5rem)}
    (standard 108 %), fordi noen motiver tåler mindre zoom enn andre. */
 ${SCOPE} .fv-stage{aspect-ratio:3/2}
 @media(max-width:640px){${SCOPE} .fv-stage{aspect-ratio:3/2}}
+
+/* ── Panorering på touch ────────────────────────────────────────────────────
+   Designet hadde touch-action: pan-y. Da holder nettleseren igjen hver
+   bevegelse til den har avgjort om det er sidescroll eller et dra – og den
+   ventingen føles nøyaktig som at bildet henger etter fingeren.
+
+   none gir oss bevegelsen umiddelbart. Prisen er at man ikke lenger kan
+   scrolle siden ved å dra PÅ selve bildet; man må ta i kanten utenfor.
+   Scenen er ca. 240 px høy på telefon, så det er en liten flate å miste. */
+${SCOPE} .fv-stage{touch-action:none}
+
+/* will-change løfter elementet til et eget GPU-lag. Designet hadde det stående
+   permanent på hvert bilde, noe som binder minne på telefonen hele tiden.
+   Vi slår det på først når draget faktisk er i gang. */
+${SCOPE} .fv-stage img{will-change:auto}
+${SCOPE} .fv-stage.dragging img{will-change:transform}
+
+/* Forhåndslastede bilder ligger utenfor scenen, så de verken males eller
+   transformeres per frame. Beholderen har høyde 0, men full bredde – bredden
+   er det srcset bruker for å velge riktig variant. */
+${SCOPE} .fv-preload{position:relative;width:100%;height:0;overflow:hidden;pointer-events:none}
+${SCOPE} .fv-preload img{position:absolute;left:0;top:0;width:100%;height:auto;opacity:0}
 
 /* Punktlista i nøkkelboks-modalen står uten strek foran punktene. Designet
    tegnet en liten vannrett strek med ::before; her er det ren tekst. */
