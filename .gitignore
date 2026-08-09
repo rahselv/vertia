@@ -13,3 +13,9 @@
 .DS_Store
 *.log
 .vercel
+
+# Designreferanse fra Claude Design (~30 MB binaerfiler).
+# Kun kilde for scripts/scope-v2-css.mjs. Den genererte app/vertia-v2.css er
+# committet, saa bygget virker uten denne mappa. Trenger du aa regenerere,
+# maa du ha mappa lokalt.
+/design-referanse
