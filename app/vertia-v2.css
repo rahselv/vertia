@@ -443,7 +443,12 @@
    rammene som tegner en boks (priskortene, estimatskjemaet, fremvisnings-
    scenen), understreker som viser tilstand (aktivt rom, aktiv bolig, hover
    på lenker) og fokusmarkeringen. De gjør en jobb utover pynt. */
+/* Designet la avstanden mellom hero-punktene i skillestreken (margin 0 22px på
+   ::before) og satte containeren til gap:10px 0 – altså null kolonnegap. Da
+   streken forsvant, klistret punktene seg sammen. Avstanden hører hjemme på
+   containeren, ikke i et skilletegn. */
 .vertia-v2 .hero-badges li+li::before{display:none}
+.vertia-v2 .hero-badges{gap:10px 30px}
 .vertia-v2 .chan-band{border-bottom:0}
 .vertia-v2 .prop .specs{border-top:0;padding-top:6px}
 .vertia-v2 .calc-top{border-bottom:0;padding-bottom:8px}
@@ -529,7 +534,7 @@
 
   /* Punktene på én linje, uten skilletegn. Designet brukte en loddrett strek
      med 22 px luft på hver side, som ble altfor bredt her; luft alene holder. */
-  .vertia-v2 .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0 14px;font-size:.7rem}
+  .vertia-v2 .hero-badges{margin-top:24px;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.7rem}
   .vertia-v2 .hero-badges li{white-space:nowrap}
   .vertia-v2 .hero-badges li+li::before{display:none}
 

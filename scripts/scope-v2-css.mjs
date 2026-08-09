@@ -215,7 +215,12 @@ ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
    rammene som tegner en boks (priskortene, estimatskjemaet, fremvisnings-
    scenen), understreker som viser tilstand (aktivt rom, aktiv bolig, hover
    på lenker) og fokusmarkeringen. De gjør en jobb utover pynt. */
+/* Designet la avstanden mellom hero-punktene i skillestreken (margin 0 22px på
+   ::before) og satte containeren til gap:10px 0 – altså null kolonnegap. Da
+   streken forsvant, klistret punktene seg sammen. Avstanden hører hjemme på
+   containeren, ikke i et skilletegn. */
 ${SCOPE} .hero-badges li+li::before{display:none}
+${SCOPE} .hero-badges{gap:10px 30px}
 ${SCOPE} .chan-band{border-bottom:0}
 ${SCOPE} .prop .specs{border-top:0;padding-top:6px}
 ${SCOPE} .calc-top{border-bottom:0;padding-bottom:8px}
@@ -301,7 +306,7 @@ ${SCOPE} .prop h3,${SCOPE} .post h3{font-size:clamp(1.25rem,1.7vw,1.5rem)}
 
   /* Punktene på én linje, uten skilletegn. Designet brukte en loddrett strek
      med 22 px luft på hver side, som ble altfor bredt her; luft alene holder. */
-  ${SCOPE} .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0 14px;font-size:.7rem}
+  ${SCOPE} .hero-badges{margin-top:24px;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.7rem}
   ${SCOPE} .hero-badges li{white-space:nowrap}
   ${SCOPE} .hero-badges li+li::before{display:none}
 
