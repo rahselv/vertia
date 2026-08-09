@@ -32,7 +32,7 @@ const team = [
   {
     name: "Emir",
     role: "Utleie & drift",
-    bio: "Emir er utdannet innen eiendomsmegling og har jobbet flere år som eiendomsmeglerfullmektig. Han har erfaring med salg av eiendom, utleie og Airbnb.",
+    bio: "Med flere års erfaring fra eiendomsmeglerbransjen ved siden av eiendomsmeglerstudiene, kombinerer Emir markedskunnskap med profesjonell kundehåndtering.",
     image: "/images/om/om-emir.png",
     alt: "Portrett av Emir Midtbø Denizci",
     zoom: 1.06,
