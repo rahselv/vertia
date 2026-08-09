@@ -4,9 +4,46 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { apartments, walkPositions } from "./showcaseData";
 
-/** Hvor mye bildet kan panoreres, i prosent. Fra designet. */
-const PAN_X = 33.4;
-const PAN_Y = 26;
+/**
+ * Hvor mye bildet kan panoreres, i prosent av bildets egen bredde/høyde.
+ *
+ * Henger sammen med `.fv-stage img{width;height}` i CSS-en:
+ * pan = (størrelse − 100) / størrelse. Med 108 % blir det 7.4. Designet hadde
+ * 150 % x 136 %, altså 33.4 og 26, men da så man bare en flik av rommet.
+ *
+ * Endrer du CSS-en, endre disse i samme slengen.
+ */
+const PAN_X = 7.4;
+const PAN_Y = 7.4;
+
+/**
+ * Stående foto i en liggende ramme kan ikke fylles uten å kutte det meste av
+ * motivet. De vises derfor i sin helhet mot sandflaten, uten panorering.
+ *
+ * Dette er designets egen mekanisme: der kunne enkeltbilder legges i et
+ * NEAR-sett og fikk `contain` på 100 % med panoreringen satt til 0. Settet sto
+ * tomt, så alle bilder fikk hard zoom. Vi utleder det fra bildets format i
+ * stedet, så det holder seg riktig når bildene byttes ut.
+ */
+function isPortrait(image: { width: number; height: number }) {
+  return image.height > image.width;
+}
+
+/** Inline-stiler og pan-faktorer for ett bilde. */
+function fitProps(image: { width: number; height: number }) {
+  const portrait = isPortrait(image);
+  return {
+    "data-kx": portrait ? 0 : PAN_X,
+    "data-ky": portrait ? 0 : PAN_Y,
+    fitStyle: portrait
+      ? ({
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+        } as const)
+      : undefined,
+  };
+}
 
 /**
  * Bildet dekker 150 % av scenens bredde (det er panoreringen som gjør resten
@@ -118,10 +155,14 @@ export default function ShowcaseV2() {
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
 
     const apply = () => {
-      const transform = `translate(${(-(px * PAN_X)).toFixed(3)}%,${(-(
-        py * PAN_Y
-      )).toFixed(3)}%)`;
       stage.querySelectorAll("img").forEach((img) => {
+        // Hvert bilde bærer sine egne pan-faktorer. Stående foto har 0 og
+        // står dermed stille mens liggende panorerer.
+        const kx = Number(img.dataset.kx ?? PAN_X);
+        const ky = Number(img.dataset.ky ?? PAN_Y);
+        const transform = `translate(${(-(px * kx)).toFixed(3)}%,${(-(
+          py * ky
+        )).toFixed(3)}%)`;
         if (img.style.transform !== transform) img.style.transform = transform;
       });
     };
@@ -201,7 +242,8 @@ export default function ShowcaseV2() {
       (img) => img.style.opacity !== "0",
     );
     if (visible?.animate) {
-      const base = visible.style.transform || "translate(-16.7%,-13%)";
+      // Reserveverdien er midtstillingen: halvparten av PAN_X/PAN_Y.
+      const base = visible.style.transform || "translate(-7.6%,-4.5%)";
       visible.animate(
         [
           { transform: `${base} scale(1)` },
@@ -249,8 +291,6 @@ export default function ShowcaseV2() {
           <div className="fv-apts" role="group" aria-label="Velg bolig">
             {apartments.map((apt, i) => (
               <Fragment key={apt.id}>
-                {/* Prikken mellom boligvalgene, som i designet. */}
-                {i > 0 && <span aria-hidden="true" />}
                 <button
                   type="button"
                   className={i === aptIdx ? "on" : undefined}
@@ -279,6 +319,9 @@ export default function ShowcaseV2() {
                 quality={QUALITY}
                 alt=""
                 aria-hidden="true"
+                data-kx={fitProps(previous)["data-kx"]}
+                data-ky={fitProps(previous)["data-ky"]}
+                style={fitProps(previous).fitStyle}
               />
             )}
             <Image
@@ -290,7 +333,9 @@ export default function ShowcaseV2() {
               sizes={SIZES}
               quality={QUALITY}
               alt={alt}
-              style={{ opacity: loaded ? 1 : 0 }}
+              data-kx={fitProps(current)["data-kx"]}
+              data-ky={fitProps(current)["data-ky"]}
+              style={{ ...fitProps(current).fitStyle, opacity: loaded ? 1 : 0 }}
               onLoad={() => {
                 // Bildet er nytt i DOM, så det har ennå ingen pan-transform.
                 panRef.current?.apply();

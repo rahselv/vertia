@@ -45,48 +45,48 @@ export const apartments: Apartment[] = [
     label: "Bolig A",
     rooms: [
       {
-        name: "Kjøkken",
+        name: "Stue",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 1/3 (demobilde)
-          { src: "/images/fremvisning/l1/01.jpg", width: 2048, height: 1365 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 2/3 (demobilde)
-          { src: "/images/fremvisning/l1/02.jpg", width: 2048, height: 1365 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 3/3 (demobilde)
-          { src: "/images/fremvisning/l1/03.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, stue 1/2 (demobilde)
+          { src: "/images/fremvisning/l2/01.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, stue 2/2 (demobilde)
+          { src: "/images/fremvisning/l2/02.jpg", width: 2048, height: 1365 },
         ],
       },
       {
-        name: "Entré",
+        name: "Kjøkken",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, entré 1/1 (demobilde)
-          { src: "/images/fremvisning/l1/04.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 1/3 (demobilde)
+          { src: "/images/fremvisning/l2/03.jpg", width: 2048, height: 1366 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 2/3 (demobilde)
+          { src: "/images/fremvisning/l2/04.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 3/3 (demobilde)
+          { src: "/images/fremvisning/l2/05.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Soverom",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 1/2 (demobilde)
-          { src: "/images/fremvisning/l1/05.jpg", width: 6000, height: 4000 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 2/2 (demobilde)
-          { src: "/images/fremvisning/l1/06.jpg", width: 6000, height: 4000 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 1/1 (demobilde)
+          { src: "/images/fremvisning/l2/06.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Bad",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 1/2 (demobilde)
-          { src: "/images/fremvisning/l1/07.jpg", width: 1365, height: 2048 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 2/2 (demobilde)
-          { src: "/images/fremvisning/l1/08.jpg", width: 1365, height: 2048 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 1/3 (demobilde)
+          { src: "/images/fremvisning/l2/08.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 2/3 (demobilde)
+          { src: "/images/fremvisning/l2/07.jpg", width: 1365, height: 2048 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 3/3 (demobilde)
+          { src: "/images/fremvisning/l2/09.jpg", width: 1365, height: 2048 },
         ],
       },
       {
         name: "Balkong",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 1/2 (demobilde)
-          { src: "/images/fremvisning/l1/09.jpg", width: 2048, height: 1365 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 2/2 (demobilde)
-          { src: "/images/fremvisning/l1/10.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 1/1 (demobilde)
+          { src: "/images/fremvisning/l2/10.jpg", width: 2048, height: 1365 },
         ],
       },
     ],
@@ -96,48 +96,48 @@ export const apartments: Apartment[] = [
     label: "Bolig B",
     rooms: [
       {
-        name: "Stue",
-        images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 1/2 (demobilde)
-          { src: "/images/fremvisning/l2/01.jpg", width: 2048, height: 1365 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 2/2 (demobilde)
-          { src: "/images/fremvisning/l2/02.jpg", width: 2048, height: 1365 },
-        ],
-      },
-      {
         name: "Kjøkken",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 1/3 (demobilde)
-          { src: "/images/fremvisning/l2/03.jpg", width: 2048, height: 1366 },
+          { src: "/images/fremvisning/l1/01.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 2/3 (demobilde)
-          { src: "/images/fremvisning/l2/04.jpg", width: 2048, height: 1365 },
+          { src: "/images/fremvisning/l1/02.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 3/3 (demobilde)
-          { src: "/images/fremvisning/l2/05.jpg", width: 2048, height: 1365 },
+          { src: "/images/fremvisning/l1/03.jpg", width: 2048, height: 1365 },
+        ],
+      },
+      {
+        name: "Entré",
+        images: [
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, entré 1/1 (demobilde)
+          { src: "/images/fremvisning/l1/04.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Soverom",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 1/1 (demobilde)
-          { src: "/images/fremvisning/l2/06.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 1/2 (demobilde)
+          { src: "/images/fremvisning/l1/05.jpg", width: 6000, height: 4000 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 2/2 (demobilde)
+          { src: "/images/fremvisning/l1/06.jpg", width: 6000, height: 4000 },
         ],
       },
       {
         name: "Bad",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 1/3 (demobilde)
-          { src: "/images/fremvisning/l2/08.jpg", width: 2048, height: 1365 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 2/3 (demobilde)
-          { src: "/images/fremvisning/l2/07.jpg", width: 1365, height: 2048 },
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 3/3 (demobilde)
-          { src: "/images/fremvisning/l2/09.jpg", width: 1365, height: 2048 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 1/2 (demobilde)
+          { src: "/images/fremvisning/l1/07.jpg", width: 1365, height: 2048 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 2/2 (demobilde)
+          { src: "/images/fremvisning/l1/08.jpg", width: 1365, height: 2048 },
         ],
       },
       {
         name: "Balkong",
         images: [
-          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 1/1 (demobilde)
-          { src: "/images/fremvisning/l2/10.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 1/2 (demobilde)
+          { src: "/images/fremvisning/l1/09.jpg", width: 2048, height: 1365 },
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 2/2 (demobilde)
+          { src: "/images/fremvisning/l1/10.jpg", width: 2048, height: 1365 },
         ],
       },
     ],

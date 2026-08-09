@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 
 const points = [
   "Virker uten strøm og internett, avgjørende på hytta",
@@ -89,15 +90,17 @@ export default function KeyboxModal() {
               </button>
 
               <div className="kb-grid">
+                {/* Produktbildet er en utklippet PNG med gjennomsiktig
+                    bakgrunn og nesten kvadratisk. Ruta er 4:5, og bildet
+                    skaleres med `contain` mot sandflaten så ingenting av
+                    produktet beskjæres. */}
                 <div className="kb-photo" style={{ aspectRatio: "4/5" }}>
-                  {/* TODO: bytt ut med ekte produktbilde av Igloohome Smart Keybox 3.
-                      Designet hadde bare en tom <image-slot>-plassholder her, og
-                      vi har ingen produktfoto i design-referanse/. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/placeholder/produkt-4x5.svg"
-                    alt=""
-                    aria-hidden="true"
+                  <Image
+                    src="/images/keybox.png"
+                    width={1571}
+                    height={1475}
+                    sizes="(min-width: 620px) 260px, 90vw"
+                    alt="Igloohome Smart Keybox 3, sett forfra og bakfra"
                   />
                 </div>
 

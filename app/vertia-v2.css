@@ -458,6 +458,34 @@
   .vertia-v2 .fvw-lbl{font-size:.7rem;padding:6px 11px}
 }
 
+/* ── Fremvisningen: rammen og zoomen ────────────────────────────────────────
+   Designet hadde 16:10-ramme (4:3 på mobil) og forstørret bildene til
+   150 % x 136 %. Fotoene er 3:2, så cover beskar topp og bunn FØR panoreringen
+   begynte, og forstørrelsen gjorde at man bare så rundt halve motivet om
+   gangen. Resultatet var en utsnittsflik, ikke et rom.
+
+   Rammen følger nå fotoenes eget format, 3:2, også på mobil der designets 4:3
+   beskar enda hardere. Da matcher bildeboksens sideforhold motivet, og cover
+   beskjærer ingenting – forstørrelsen alene bestemmer hvor mye som er synlig.
+
+   108 % gir nok slark til å se seg rundt uten at motivet forsvinner.
+   PAN_X/PAN_Y i Showcase.tsx = (108 − 100) / 108 = 7.4. Endrer du det ene,
+   endre det andre. */
+.vertia-v2 .fv-stage{aspect-ratio:3/2}
+@media(max-width:640px){.vertia-v2 .fv-stage{aspect-ratio:3/2}}
+.vertia-v2 .fv-stage img{width:108%;height:108%}
+
+/* Punktlista i nøkkelboks-modalen står uten strek foran punktene. Designet
+   tegnet en liten vannrett strek med ::before; her er det ren tekst. */
+.vertia-v2 .kb-list li::before{display:none}
+.vertia-v2 .kb-list li{gap:0}
+
+/* Produktbildet er en utklippet PNG, ikke et fotomotiv. Designet la opp til
+   object-fit: cover, som ville beskåret et nesten kvadratisk produkt i en
+   4:5-rute. Med contain og litt luft vises hele produktet mot sandflaten. */
+.vertia-v2 .kb-photo{padding:20px}
+.vertia-v2 .kb-photo img{object-fit:contain;aspect-ratio:auto}
+
 /* Samtykke. Designet har ingen slik boks, men v1 hadde en påkrevd – den er
    nødvendig etter markedsføringsloven § 15 og skal ikke falle bort i redesignet. */
 .vertia-v2 .consent{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0;max-width:46rem;font-size:.88rem;line-height:1.6;cursor:pointer}
