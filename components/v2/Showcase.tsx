@@ -372,7 +372,7 @@ export default function ShowcaseV2() {
               maxWidth: "none",
             }}
           >
-            Boligen vises i verdensklasse
+            Boligen vises frem på en ny måte
           </h2>
           <p className="fv-sub">
             La kundene gå gjennom boligen før de booker
