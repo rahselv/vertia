@@ -2,20 +2,21 @@
  * ───────────────────────────────────────────────────────────────────────────
  *  BILDER TIL FREMVISNINGEN
  * ───────────────────────────────────────────────────────────────────────────
- *  Designet brukte 20 kuraterte foto fra design-referanse/vertia/img/l1/ og
- *  /l2/. De er IKKE tatt i bruk – vi vet ikke om vi har rett til å publisere
- *  dem, og alt-tekstene i designet var generiske.
+ *  De 20 kuraterte fotoene fra designet, kopiert fra
+ *  design-referanse/vertia/img/l1/ og /l2/ til public/images/fremvisning/.
  *
- *  Hvert bilde står derfor som en nøytral plassholder med en TODO som sier
- *  hvilket rom og hvilken fil i designet det tilsvarer. Bytt `PLACEHOLDER` med
- *  stien til det ekte fotoet, og skriv en beskrivende `alt`.
+ *  Dette er demobilder, ikke boliger Vertia faktisk drifter. Hver oppføring har
+ *  en TODO om at den må erstattes med foto av en ekte bolig før lansering.
  *
- *  Så lenge alle plassholderne er samme fil, vil bytte av bilde inne i et rom
- *  se ut som om ingenting skjer. Det er forventet, ikke en feil i mekanikken.
+ *  To ting å være klar over:
+ *  - Bildene er ubehandlede, 2048 px brede, til sammen 14,5 MB. l1/05.jpg og
+ *    l1/06.jpg er alene på 2,8 og 2,5 MB. De bør konverteres til WebP eller
+ *    gå gjennom next/image før lansering.
+ *  - Alt-tekstene genereres av Showcase-komponenten som «bolig – rom, bilde
+ *    x av y». Det er nøytralt og korrekt, men beskriver ikke motivet. Skriv
+ *    ekte alt-tekster når de ekte bildene kommer inn.
  * ───────────────────────────────────────────────────────────────────────────
  */
-
-const PLACEHOLDER = "/images/placeholder/rom-16x10.svg";
 
 export type Room = {
   name: string;
@@ -36,46 +37,46 @@ export const apartments: Apartment[] = [
       {
         name: "Kjøkken",
         images: [
-          // TODO: ekte foto – Bolig A, kjøkken 1/3 (designet: img/l1/01.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig A, kjøkken 2/3 (designet: img/l1/02.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig A, kjøkken 3/3 (designet: img/l1/03.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 1/3 (demobilde)
+          "/images/fremvisning/l1/01.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 2/3 (demobilde)
+          "/images/fremvisning/l1/02.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 3/3 (demobilde)
+          "/images/fremvisning/l1/03.jpg",
         ],
       },
       {
         name: "Entré",
         images: [
-          // TODO: ekte foto – Bolig A, entré 1/1 (designet: img/l1/04.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, entré 1/1 (demobilde)
+          "/images/fremvisning/l1/04.jpg",
         ],
       },
       {
         name: "Soverom",
         images: [
-          // TODO: ekte foto – Bolig A, soverom 1/2 (designet: img/l1/05.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig A, soverom 2/2 (designet: img/l1/06.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 1/2 (demobilde)
+          "/images/fremvisning/l1/05.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 2/2 (demobilde)
+          "/images/fremvisning/l1/06.jpg",
         ],
       },
       {
         name: "Bad",
         images: [
-          // TODO: ekte foto – Bolig A, bad 1/2 (designet: img/l1/07.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig A, bad 2/2 (designet: img/l1/08.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 1/2 (demobilde)
+          "/images/fremvisning/l1/07.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 2/2 (demobilde)
+          "/images/fremvisning/l1/08.jpg",
         ],
       },
       {
         name: "Balkong",
         images: [
-          // TODO: ekte foto – Bolig A, balkong 1/2 (designet: img/l1/09.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig A, balkong 2/2 (designet: img/l1/10.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 1/2 (demobilde)
+          "/images/fremvisning/l1/09.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 2/2 (demobilde)
+          "/images/fremvisning/l1/10.jpg",
         ],
       },
     ],
@@ -87,46 +88,46 @@ export const apartments: Apartment[] = [
       {
         name: "Stue",
         images: [
-          // TODO: ekte foto – Bolig B, stue 1/2 (designet: img/l2/01.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig B, stue 2/2 (designet: img/l2/02.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 1/2 (demobilde)
+          "/images/fremvisning/l2/01.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 2/2 (demobilde)
+          "/images/fremvisning/l2/02.jpg",
         ],
       },
       {
         name: "Kjøkken",
         images: [
-          // TODO: ekte foto – Bolig B, kjøkken 1/3 (designet: img/l2/03.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig B, kjøkken 2/3 (designet: img/l2/04.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig B, kjøkken 3/3 (designet: img/l2/05.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 1/3 (demobilde)
+          "/images/fremvisning/l2/03.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 2/3 (demobilde)
+          "/images/fremvisning/l2/04.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 3/3 (demobilde)
+          "/images/fremvisning/l2/05.jpg",
         ],
       },
       {
         name: "Soverom",
         images: [
-          // TODO: ekte foto – Bolig B, soverom 1/1 (designet: img/l2/06.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 1/1 (demobilde)
+          "/images/fremvisning/l2/06.jpg",
         ],
       },
       {
         name: "Bad",
         images: [
-          // TODO: ekte foto – Bolig B, bad 1/3 (designet: img/l2/08.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig B, bad 2/3 (designet: img/l2/07.jpg)
-          PLACEHOLDER,
-          // TODO: ekte foto – Bolig B, bad 3/3 (designet: img/l2/09.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 1/3 (demobilde)
+          "/images/fremvisning/l2/08.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 2/3 (demobilde)
+          "/images/fremvisning/l2/07.jpg",
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 3/3 (demobilde)
+          "/images/fremvisning/l2/09.jpg",
         ],
       },
       {
         name: "Balkong",
         images: [
-          // TODO: ekte foto – Bolig B, balkong 1/1 (designet: img/l2/10.jpg)
-          PLACEHOLDER,
+          // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 1/1 (demobilde)
+          "/images/fremvisning/l2/10.jpg",
         ],
       },
     ],
@@ -135,9 +136,10 @@ export const apartments: Apartment[] = [
 
 /**
  * Hvor «gå videre»-punktet står i bildet, per romindeks. Verdiene er i prosent
- * av scenen og hentet rett fra designet, der de er plassert etter motivet i de
- * opprinnelige fotoene. Når de ekte bildene kommer inn, bør posisjonene
- * justeres så punktet peker mot en dør eller en åpning.
+ * av scenen og hentet rett fra designet, der de er plassert etter motivet i
+ * nettopp disse fotoene. De stemmer altså så lenge demobildene står – men må
+ * justeres når bildene byttes ut, så punktet fortsatt peker mot en dør eller
+ * en åpning.
  */
 export const walkPositions = [
   { x: 50, y: 64 },
