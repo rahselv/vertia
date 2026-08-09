@@ -265,11 +265,17 @@ export default function ShowcaseV2() {
 
     apply();
 
+    // `panning` styrer overleggene og henger igjen litt etter at fingeren
+    // slipper, så knappen ikke blinker mellom to draq. `dragging` følger
+    // fingeren nøyaktig og styrer markør og will-change.
+    let settle = 0;
+
     const onDown = (e: PointerEvent) => {
       // Knappene oppå bildet skal kunne trykkes uten å starte et dra.
       if ((e.target as HTMLElement).closest(".fv-nav,.fv-walk")) return;
       drag = { x: e.clientX, y: e.clientY };
-      stage.classList.add("dragging");
+      window.clearTimeout(settle);
+      stage.classList.add("dragging", "panning");
       stage.setPointerCapture(e.pointerId);
       setHintVisible(false);
       kick();
@@ -288,6 +294,9 @@ export default function ShowcaseV2() {
     const onUp = () => {
       drag = null;
       stage.classList.remove("dragging");
+      // Kort forsinkelse før overleggene kommer tilbake.
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => stage.classList.remove("panning"), 400);
       kick();
     };
 
@@ -307,6 +316,7 @@ export default function ShowcaseV2() {
 
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
       observer.disconnect();
       stage.removeEventListener("pointerdown", onDown);
       stage.removeEventListener("pointermove", onMove);

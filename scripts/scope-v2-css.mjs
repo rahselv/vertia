@@ -349,6 +349,39 @@ ${SCOPE} .fv-stage{touch-action:none}
 ${SCOPE} .fv-stage img{will-change:auto}
 ${SCOPE} .fv-stage.dragging img{will-change:transform}
 
+/* ── Overlegg under panorering ──────────────────────────────────────────────
+   Profilert med 4x CPU-struping og mobilemulering: selve bildet komposieres
+   på GPU og koster nesten ingenting (Composite 1,9 ms). Tiden gikk til Paint
+   og stilberegning, og de to kildene lå begge oppå bildet:
+
+   1. backdrop-filter på ringen, etiketten, hintet og telleren. Et
+      backdrop-filter må lese og bløre bakgrunnen på nytt hver gang bakgrunnen
+      endrer seg – og bakgrunnen er bildet som flyttes hver frame.
+   2. fvwPulse animerer box-shadow, som ikke kan komposieres og derfor maler
+      på nytt kontinuerlig, også når man ikke drar.
+
+   Overleggene fades derfor ut mens man panorerer, og backdrop-filter slås av.
+   Klassen panning henger igjen 400 ms etter at fingeren slipper, så knappen ikke
+   blinker mellom to bevegelser. */
+${SCOPE} .fv-walk,${SCOPE} .fv-count,${SCOPE} .fv-nav,${SCOPE} .fv-hint{transition:opacity .3s ease}
+${SCOPE} .fv-stage.panning .fv-walk,
+${SCOPE} .fv-stage.panning .fv-count,
+${SCOPE} .fv-stage.panning .fv-nav,
+${SCOPE} .fv-stage.panning .fv-hint{opacity:0;pointer-events:none}
+${SCOPE} .fv-stage.panning .fvw-ring,
+${SCOPE} .fv-stage.panning .fvw-lbl,
+${SCOPE} .fv-stage.panning .fv-hint,
+${SCOPE} .fv-stage.panning .fv-count{backdrop-filter:none;-webkit-backdrop-filter:none}
+${SCOPE} .fv-stage.panning .fvw-ring{animation:none}
+
+/* Pulseringen står av på touch uansett: den maler på nytt hele tiden, og på
+   telefon dekker fingeren knappen i det man tar på den. */
+@media(pointer:coarse){
+  ${SCOPE} .fvw-ring{animation:none}
+  ${SCOPE} .fvw-ring,${SCOPE} .fvw-lbl,${SCOPE} .fv-hint,${SCOPE} .fv-count{backdrop-filter:none;-webkit-backdrop-filter:none}
+  ${SCOPE} .fvw-lbl,${SCOPE} .fv-hint,${SCOPE} .fv-count{background:rgba(23,15,11,.72)}
+}
+
 /* Forhåndslastede bilder ligger utenfor scenen, så de verken males eller
    transformeres per frame. Beholderen har høyde 0, men full bredde – bredden
    er det srcset bruker for å velge riktig variant. */
