@@ -135,8 +135,15 @@ export default function DragMarquee({
       }
     };
 
-    wrap.addEventListener("mouseenter", onEnter);
-    wrap.addEventListener("mouseleave", onLeave);
+    // Pause-ved-hover bindes bare på enheter som faktisk kan hovre. På touch
+    // fyrer iOS Safari `mouseenter` ved tapp uten å fyre `mouseleave` igjen, og
+    // karusellen ville da blitt stående permanent i pause. Designet hadde denne
+    // feilen.
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    if (canHover) {
+      wrap.addEventListener("mouseenter", onEnter);
+      wrap.addEventListener("mouseleave", onLeave);
+    }
     wrap.addEventListener("pointerdown", onDown);
     wrap.addEventListener("pointermove", onMove);
     wrap.addEventListener("pointerup", onUp);
@@ -149,8 +156,10 @@ export default function DragMarquee({
       cancelAnimationFrame(frame);
       io.disconnect();
       ro.disconnect();
-      wrap.removeEventListener("mouseenter", onEnter);
-      wrap.removeEventListener("mouseleave", onLeave);
+      if (canHover) {
+        wrap.removeEventListener("mouseenter", onEnter);
+        wrap.removeEventListener("mouseleave", onLeave);
+      }
       wrap.removeEventListener("pointerdown", onDown);
       wrap.removeEventListener("pointermove", onMove);
       wrap.removeEventListener("pointerup", onUp);

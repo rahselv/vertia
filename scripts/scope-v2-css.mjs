@@ -197,6 +197,36 @@ ${SCOPE} .mq-vrbo{font:700 1.55rem/1 var(--sans);letter-spacing:-.02em;color:#16
 ${SCOPE} .mq-finn{font:800 1.5rem/1 var(--sans);color:#0063FB}
 ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
 
+/* ── Mobil ──────────────────────────────────────────────────────────────────
+   Designet ble tegnet for desktop. Justeringene under gjelder kun små skjermer
+   og berører ikke desktop-utseendet. */
+
+/* Fingervennlige treffflater. Designets padding (6–9px) gir under 30px høyde,
+   godt under de 44px som er tommelfingerregelen på touch. */
+@media(pointer:coarse){
+  ${SCOPE} .fv-rooms button{padding:13px 6px}
+  ${SCOPE} .fv-apts button{padding:11px 6px}
+  ${SCOPE} .faq summary{padding:26px 0}
+}
+
+/* Knappene i heroen strekker seg over hele bredden på smale skjermer i stedet
+   for å stå som to smale kolonner. */
+@media(max-width:560px){
+  ${SCOPE} .hero-cta .btn{width:100%}
+}
+
+/* Skillestrekene mellom hero-badgene tar for mye plass når listen brytes over
+   flere linjer på telefon. */
+@media(max-width:560px){
+  ${SCOPE} .hero-badges{flex-direction:column;gap:10px}
+  ${SCOPE} .hero-badges li+li::before{display:none}
+}
+
+/* «Gå videre»-etiketten kan bli bredere enn scenen på de smaleste telefonene. */
+@media(max-width:420px){
+  ${SCOPE} .fvw-lbl{font-size:.7rem;padding:6px 11px}
+}
+
 /* Bekreftelse etter innsendt skjema. Designet bytter ut skjemaet med inline
    stiler i JS; vi gjør det med klasser i stedet. */
 ${SCOPE} .form-ok{margin:26px 0 0;line-height:1.7;color:var(--ink-500)}

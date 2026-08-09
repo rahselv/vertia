@@ -5,6 +5,7 @@ import ChannelsV2 from "@/components/v2/Channels";
 import PropertiesV2 from "@/components/v2/Properties";
 import CalculatorV2 from "@/components/v2/Calculator";
 import HowItWorksV2 from "@/components/v2/HowItWorks";
+import ShowcaseV2 from "@/components/v2/Showcase";
 import ManifestoV2 from "@/components/v2/Manifesto";
 import PricingV2 from "@/components/v2/Pricing";
 import ArticlesV2 from "@/components/v2/Articles";
@@ -36,7 +37,7 @@ export default function Home() {
           <PropertiesV2 />
           <CalculatorV2 />
           <HowItWorksV2 />
-          {/* Etappe 4: fremvisningen kommer her. */}
+          <ShowcaseV2 />
           <ManifestoV2 />
           <PricingV2 />
           <ArticlesV2 />
