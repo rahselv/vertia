@@ -19,3 +19,4 @@
 # committet, saa bygget virker uten denne mappa. Trenger du aa regenerere,
 # maa du ha mappa lokalt.
 /design-referanse
+tsconfig.tsbuildinfo
