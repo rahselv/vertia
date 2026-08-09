@@ -1,4 +1,6 @@
-import RevealController from "@/components/v2/RevealController";
+import RevealController, {
+  revealBootstrap,
+} from "@/components/v2/RevealController";
 import HeaderV2 from "@/components/v2/Header";
 import HeroV2 from "@/components/v2/Hero";
 import ChannelsV2 from "@/components/v2/Channels";
@@ -29,6 +31,9 @@ export default function Home() {
       <RevealController />
 
       <div className="vertia-v2">
+        {/* Må stå først i wrapperen og kjøre synkront – se revealBootstrap. */}
+        <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
+
         <HeaderV2 />
 
         <main>

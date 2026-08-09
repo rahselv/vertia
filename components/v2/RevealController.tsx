@@ -14,14 +14,29 @@ import { useEffect } from "react";
  * allerede ligger ferdig i vertia-v2.css. `prefers-reduced-motion` håndteres
  * også der.
  */
+/**
+ * Synkront script som settes inn øverst i wrapperen.
+ *
+ * `js-reveal` MÅ på plass før første maling. Legger vi den på i en useEffect,
+ * rekker innholdet å bli malt synlig, for så å hoppe til usynlig og fade inn
+ * igjen – et tydelig blaff ved lasting. Designet unngikk dette ved å kjøre
+ * scriptet sitt synkront; dette er samme grep.
+ *
+ * Timeouten er en livline: hvis JS-bunten aldri hydrerer, vises innholdet
+ * likevel etter 2,5 s. Uten den ville en feilet bundle etterlatt en tom side.
+ */
+export const revealBootstrap = `
+if('IntersectionObserver' in window){
+  var r=document.currentScript.parentElement;
+  r.classList.add('js-reveal');
+  setTimeout(function(){
+    r.querySelectorAll('.rv:not(.in)').forEach(function(e){e.classList.add('in')});
+  },2500);
+}`;
+
 export default function RevealController() {
   useEffect(() => {
     if (!("IntersectionObserver" in window)) return;
-
-    const roots = Array.from(
-      document.querySelectorAll<HTMLElement>(".vertia-v2"),
-    );
-    roots.forEach((el) => el.classList.add("js-reveal"));
 
     const show = (el: Element) => el.classList.add("in");
 
@@ -49,7 +64,6 @@ export default function RevealController() {
     return () => {
       io.disconnect();
       window.clearTimeout(timer);
-      roots.forEach((el) => el.classList.remove("js-reveal"));
     };
   }, []);
 
