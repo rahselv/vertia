@@ -44,7 +44,12 @@ export default function OmOssPage() {
     <ContactModalProvider>
       <Header solid />
       <main className="bg-sand-50">
-        <section className="section">
+        {/* Egen padding i stedet for .section. Den globale verdien
+            (py-40 sm:py-56 lg:py-64) er ment som luft MELLOM seksjoner, og gir
+            160–256 px. Her er dette sidens første og eneste seksjon, så den
+            luften havnet rett under headeren og etterlot nesten en halv skjerm
+            tom før innholdet startet. Samme i bunnen, mot footeren. */}
+        <section className="pb-24 pt-14 sm:pb-32 sm:pt-20">
           <div className="container-page">
             <div className="mx-auto max-w-2xl">
               <Reveal>
