@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Plassholder for produktbilde">
+  <rect width="800" height="1000" fill="#EFE8DE"/>
+  <rect x="0.5" y="0.5" width="799" height="999" fill="none" stroke="#DED2BF"/>
+  <g fill="none" stroke="#8C7B6C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <rect x="310" y="430" width="180" height="140" rx="10"/>
+    <circle cx="361" cy="476" r="15"/>
+    <path d="M310 538l50-43 43 37 36-30 51 45"/>
+  </g>
+  <text x="400" y="648" text-anchor="middle" fill="#8C7B6C" opacity="0.75"
+        font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="500" letter-spacing="4">
+    BILDE KOMMER
+  </text>
+</svg>

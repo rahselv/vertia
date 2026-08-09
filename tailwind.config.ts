@@ -29,6 +29,16 @@ const config: Config = {
           700: "#473B31",
           900: "#211A15", // --ink (hovedtekst)
         },
+        // Aksentfarge fra landingsside v2 (terrakotta/kobber). Finnes ikke i
+        // v1-designet. Brukes til eyebrows, «Mest valgt»-merket, FAQ-plusset,
+        // uthevet søyle i rapporten og lenke-hover.
+        accent: {
+          400: "#CE9067", // --acc-lt (på mørke flater)
+          500: "#A65A38", // --acc
+        },
+        // --cream. Ligger nær sand-50 (#FBF8F3), men er en egen tone som v2
+        // bruker for tekst og flater oppå espresso.
+        cream: "#FAF6EE",
       },
       fontFamily: {
         // Brødtekst og UI i Inter (sans).
@@ -53,6 +63,8 @@ const config: Config = {
       },
       maxWidth: {
         content: "75rem",
+        // v2 sin --maxw (1360px). Bredere enn v1 sin container.
+        "content-wide": "85rem",
       },
       boxShadow: {
         // Flat redaksjonell flate – ingen skygger, ingen dybde-triks.
