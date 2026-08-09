@@ -434,6 +434,12 @@ ${SCOPE} .kb-list li{gap:0}
 ${SCOPE} .kb-photo{padding:20px}
 ${SCOPE} .kb-photo img{object-fit:contain;aspect-ratio:auto}
 
+/* Lenke til utdypende artikkel under et FAQ-svar. Designet har ikke dette. */
+${SCOPE} .faq details p.faq-svar-med-lenke{padding-bottom:12px}
+${SCOPE} .faq details p.faq-lenke{padding-bottom:30px;margin:0;font-size:.95rem}
+${SCOPE} .faq details p.faq-lenke a{color:var(--acc);text-decoration:underline;text-underline-offset:4px}
+${SCOPE} .faq details p.faq-lenke a:hover{color:var(--ink-900)}
+
 /* Samtykke. Designet har ingen slik boks, men v1 hadde en påkrevd – den er
    nødvendig etter markedsføringsloven § 15 og skal ikke falle bort i redesignet. */
 ${SCOPE} .consent{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0;max-width:46rem;font-size:.88rem;line-height:1.6;cursor:pointer}

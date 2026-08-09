@@ -1,4 +1,13 @@
-const faqs = [
+import Link from "next/link";
+
+type Faq = {
+  question: string;
+  answer: string;
+  /** Valgfri lenke til utdypende artikkel, vist under svaret. */
+  link?: { href: string; label: string };
+};
+
+const faqs: Faq[] = [
   {
     question: "Hva koster det?",
     answer:
@@ -18,6 +27,15 @@ const faqs = [
     question: "Hvordan håndteres nøkler og innsjekk?",
     answer:
       "Vi installerer en Igloohome Smart Keybox 3 (eller Yale Doorman kodelås der det passer). Gjestene får en engangskode som kun virker under sitt opphold, og du slipper å møte opp eller levere nøkler.",
+  },
+  {
+    question: "Hva med forsikring?",
+    answer:
+      "Vanlig boligforsikring dekker som regel ikke korttidsutleie. Før første gjest hjelper vi deg å avklare med ditt forsikringsselskap hva som gjelder, og hvilken utvidelse du eventuelt trenger. Vi tar depositum på hver booking og dokumenterer standarden ved inn- og utsjekk, slik at eventuelle skader kan følges opp mot gjesten. Utleie via Airbnb er i tillegg omfattet av deres AirCover-ordning.",
+    link: {
+      href: "/artikler/forsikring-ved-korttidsutleie",
+      label: "Les mer om forsikring ved korttidsutleie",
+    },
   },
   {
     question: "Er korttidsutleie lovlig?",
@@ -53,7 +71,16 @@ export default function FaqV2() {
           {faqs.map((faq) => (
             <details key={faq.question}>
               <summary>{faq.question}</summary>
-              <p>{faq.answer}</p>
+              {/* Klassen fjerner bunnpaddingen når en lenke følger under, så
+                  svaret og lenken henger sammen som én blokk. */}
+              <p className={faq.link ? "faq-svar-med-lenke" : undefined}>
+                {faq.answer}
+              </p>
+              {faq.link && (
+                <p className="faq-lenke">
+                  <Link href={faq.link.href}>{faq.link.label}</Link>
+                </p>
+              )}
             </details>
           ))}
         </div>
