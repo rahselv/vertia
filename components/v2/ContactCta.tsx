@@ -6,11 +6,18 @@ import ArrowIcon from "./ArrowIcon";
 import { submitToFormspree } from "@/lib/formspree";
 
 /**
- * Kontakt-seksjonen nederst. I v1 var dette en knapp som åpnet en modal
- * (ContactModalProvider); i v2 ligger skjemaet rett i seksjonen.
+ * Kontakt-seksjonen nederst.
  *
- * Designet hadde et demo-skjema som bare byttet ut sin egen HTML. Her går
- * innsendingen til Formspree, som i resten av siden.
+ * Holdt bevisst liten. Den sto tidligere med overskriften «La oss regne på
+ * akkurat din bolig» og et stort skjema, altså samme løfte og samme handling
+ * som inntektsestimatet lenger oppe. To konkurrerende hovedhandlinger på samme
+ * side gjør begge svakere, så denne er nå en ren kontaktvei: kort overskrift,
+ * e-post og telefon, samtykke.
+ *
+ * Estimatskjemaet er sidens hovedkonvertering og står urørt.
+ *
+ * Innsendingen går til Formspree, som resten av siden. Designet hadde et
+ * demo-skjema som bare byttet ut sin egen HTML.
  */
 export default function ContactCtaV2() {
   const [email, setEmail] = useState("");
@@ -55,10 +62,11 @@ export default function ContactCtaV2() {
 
       <div className="wrap in">
         <h2 className="rv" style={{ transitionDelay: ".1s" }}>
-          La oss regne på <em>akkurat din</em> bolig
+          Ta kontakt
         </h2>
         <p className="ld rv" style={{ transitionDelay: ".2s" }}>
-          Legg igjen kontaktinfo, så hører du fra oss innen kort tid.
+          Har du et spørsmål, eller vil du bare ta en prat? Legg igjen
+          kontaktinfo, så hører du fra oss.
         </p>
 
         {status === "success" ? (

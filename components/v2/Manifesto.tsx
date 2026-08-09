@@ -10,11 +10,12 @@ export default function ManifestoV2() {
   return (
     <section className="section manif">
       <div className="wrap">
+        {/* Størrelsen settes i CSS (.manif h2), ikke her, så innstrammingen av
+            typografien kan styres ett sted. */}
         <h2
           className="rv"
           style={{
             transitionDelay: ".1s",
-            fontSize: "clamp(1.9rem,3.4vw,3rem)",
             maxWidth: "none",
             textAlign: "center",
             margin: "0 auto",

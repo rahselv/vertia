@@ -68,10 +68,13 @@ function splitSelectors(list) {
 
 function scopeSelector(sel) {
   if (SPECIAL.has(sel)) return SPECIAL.get(sel);
-  // `.js-reveal` settes i designet på <body>. Hos oss er den en klasse på selve
-  // wrapperen, så den skal feste seg på scopet – ikke bli en etterkommer av det.
+  // `.js-reveal` settes i designet på <body>, av et script som kjører før
+  // første maling. Hos oss settes den på <html>, IKKE på wrapper-diven: React
+  // eier wrapperen, og en klasse lagt på den før hydrering gir «Prop className
+  // did not match» – hvorpå React kan fjerne klassen igjen. <html> er derimot
+  // et element React tåler at andre skriver til.
   if (sel === ".js-reveal" || sel.startsWith(".js-reveal ")) {
-    return `${SCOPE}${sel}`;
+    return sel.replace(/^\.js-reveal\s*/, `.js-reveal ${SCOPE} `).trim();
   }
   return `${SCOPE} ${sel}`;
 }
@@ -197,6 +200,48 @@ ${SCOPE} .mq-vrbo{font:700 1.55rem/1 var(--sans);letter-spacing:-.02em;color:#16
 ${SCOPE} .mq-finn{font:800 1.5rem/1 var(--sans);color:#0063FB}
 ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
 
+/* ── Tettere rytme ──────────────────────────────────────────────────────────
+   Designet er tegnet luftig: seksjoner på opptil 190 px topp og bunn, og
+   seksjonstitler opp mot 5,2 rem. På en side med tolv seksjoner ble summen for
+   mye – man scroller mye og leser lite, og overskriftene dominerer innholdet.
+
+   Verdiene under strammer inn jevnt over hele siden og beholder den
+   redaksjonelle stilen: samme skriftsnitt, samme proporsjoner mellom tittel og
+   ingress, bare mindre. Dette er et bevisst avvik fra designfila. */
+${SCOPE} .section{padding:clamp(64px,7vw,108px) 0}
+${SCOPE} .sec-head{margin-bottom:clamp(36px,3.6vw,56px)}
+${SCOPE} .sec-title{font-size:clamp(2rem,3.8vw,3.2rem)}
+${SCOPE} .sec-lead{font-size:1rem}
+
+/* Hero: mindre tittel og langt kortere avstand ned til knappene og badgene.
+   Designet skjøv dem 130 px og 150 px ned, som ga en nesten tom skjerm. */
+${SCOPE} .hero h1{font-size:clamp(2rem,3.4vw,3.2rem)}
+${SCOPE} .hero-cta{margin-top:clamp(36px,4.5vw,64px)}
+${SCOPE} .hero-badges{margin-top:clamp(36px,5vw,72px)}
+${SCOPE} .hero .wrap{padding-top:96px;padding-bottom:56px}
+
+/* Manifest, kontakt og fotmerket var de tre største typografiske flatene. */
+${SCOPE} .manif h2{font-size:clamp(1.6rem,2.6vw,2.4rem)}
+${SCOPE} .manif .sub{margin-top:26px;font-size:1rem}
+${SCOPE} .manif-stats{margin-top:clamp(40px,4vw,60px)}
+${SCOPE} .cta h2{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+${SCOPE} .cta .ld{margin-top:22px;font-size:1rem}
+${SCOPE} .cta-form{margin-top:34px}
+${SCOPE} .ft-brand{font-size:clamp(3.2rem,10vw,8rem);margin:clamp(36px,4.5vw,60px) 0 clamp(20px,2vw,32px)}
+${SCOPE} .ft{padding-top:clamp(48px,5vw,68px)}
+
+/* Steg, priser, boliger og fremvisning: mindre luft mellom elementene. */
+${SCOPE} .stepx{padding:clamp(30px,3.2vw,50px) 0}
+${SCOPE} .stepx h3{font-size:clamp(1.4rem,2vw,1.9rem)}
+${SCOPE} .tiers{margin-top:clamp(32px,3.4vw,48px)}
+${SCOPE} .tier{padding:clamp(26px,2.8vw,36px)}
+${SCOPE} .tier .pct{font-size:clamp(2.6rem,3.8vw,3.6rem);margin-top:20px}
+${SCOPE} .fv{margin-top:clamp(26px,2.8vw,38px)}
+${SCOPE} .fv-sub{font-size:1rem;margin-top:16px}
+${SCOPE} .faq summary{font-size:clamp(1.1rem,1.5vw,1.3rem)}
+${SCOPE} .calc{padding:clamp(24px,2.8vw,38px)}
+${SCOPE} .prop h3,${SCOPE} .post h3{font-size:clamp(1.25rem,1.7vw,1.5rem)}
+
 /* ── Mobil ──────────────────────────────────────────────────────────────────
    Designet ble tegnet for desktop. Justeringene under gjelder kun små skjermer
    og berører ikke desktop-utseendet. */
@@ -209,17 +254,63 @@ ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
   ${SCOPE} .faq summary{padding:26px 0}
 }
 
-/* Knappene i heroen strekker seg over hele bredden på smale skjermer i stedet
-   for å stå som to smale kolonner. */
-@media(max-width:560px){
-  ${SCOPE} .hero-cta .btn{width:100%}
-}
+/* ── Mobil: egen, strammere skala ───────────────────────────────────────────
+   Designet er tegnet for desktop og skalerer ned via vw-baserte clamp-verdier.
+   På telefon ble resultatet at heroen fylte hele skjermen og overskriftene tok
+   mesteparten av plassen. Under 640 px settes derfor faste, mindre verdier i
+   stedet for å la vw bestemme. Mobil prioriteres foran desktop der de to
+   trekker i hver sin retning. */
+@media(max-width:640px){
+  /* Heroen skal ikke fylle viewporten. Man skal se at det finnes noe under. */
+  ${SCOPE} .hero{min-height:78svh}
+  ${SCOPE} .hero .wrap{padding-top:82px;padding-bottom:38px}
+  ${SCOPE} .hero h1{font-size:1.75rem;line-height:1.18}
+  ${SCOPE} .hero-kicker{font-size:.6rem;letter-spacing:.22em;margin-bottom:18px}
+  ${SCOPE} .hero-cta{margin-top:26px;gap:10px;grid-template-columns:1fr}
+  ${SCOPE} .hero-cta .btn{width:100%;padding:12px 18px;font-size:.85rem}
 
-/* Skillestrekene mellom hero-badgene tar for mye plass når listen brytes over
-   flere linjer på telefon. */
-@media(max-width:560px){
-  ${SCOPE} .hero-badges{flex-direction:column;gap:10px}
-  ${SCOPE} .hero-badges li+li::before{display:none}
+  /* Punktene på én linje med prikk mellom, ikke stablet. Designet brukte en
+     loddrett strek med 22 px luft på hver side, som ble altfor bredt her. */
+  ${SCOPE} .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0;font-size:.7rem}
+  ${SCOPE} .hero-badges li{white-space:nowrap}
+  ${SCOPE} .hero-badges li+li::before{content:"·";width:auto;height:auto;background:none;margin:0 7px;color:rgba(255,255,255,.55)}
+
+  ${SCOPE} .hdr-in{height:60px}
+  ${SCOPE} .btn{padding:13px 22px;font-size:.85rem}
+
+  /* Seksjonsluft og overskrifter kraftig ned. */
+  ${SCOPE} .section{padding:44px 0}
+  ${SCOPE} .chan-band{padding:26px 0}
+  ${SCOPE} .sec-head{margin-bottom:24px}
+  ${SCOPE} .sec-title{font-size:1.6rem}
+  ${SCOPE} .sec-lead{font-size:.95rem}
+  ${SCOPE} .manif h2{font-size:1.45rem}
+  ${SCOPE} .manif .sub{margin-top:18px;font-size:.95rem}
+  ${SCOPE} .manif-stats{margin-top:30px}
+  ${SCOPE} .manif-stats b{font-size:1.6rem}
+  ${SCOPE} .cta h2{font-size:1.6rem}
+  ${SCOPE} .cta .ld{font-size:.95rem}
+  ${SCOPE} .stepx{padding:26px 0;gap:20px}
+  ${SCOPE} .stepx h3{font-size:1.25rem}
+  ${SCOPE} .faq summary{font-size:1rem;padding:18px 0}
+  ${SCOPE} .fv-sub{font-size:.95rem}
+  ${SCOPE} .calc{padding:22px}
+  ${SCOPE} .calc-top h3{font-size:1.2rem}
+  ${SCOPE} .prop h3,${SCOPE} .post h3{font-size:1.1rem}
+  ${SCOPE} .startpk{padding:24px 22px}
+  ${SCOPE} .startpk h3{font-size:1.35rem}
+  ${SCOPE} .ft{padding-top:40px;gap:30px}
+  ${SCOPE} .ft-brand{font-size:2.8rem;margin:26px 0 14px}
+
+  /* Prispakkene lå åpne under hverandre og ble en veldig lang kolonne. På
+     telefon er de nå swipebare kort med snap – samme språk som kortkarusellene
+     ellers på siden, og uten JS. */
+  ${SCOPE} .tiers{display:flex;border:0;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+  ${SCOPE} .tiers::-webkit-scrollbar{display:none}
+  ${SCOPE} .tier{flex:0 0 84%;scroll-snap-align:center;border:1px solid var(--sand-300);padding:26px 24px}
+  ${SCOPE} .tier:last-child{border-bottom:1px solid var(--sand-300)}
+  ${SCOPE} .tier.on{border-color:var(--brand-600)}
+  ${SCOPE} .tier .pct{font-size:2.6rem;margin-top:16px}
 }
 
 /* «Gå videre»-etiketten kan bli bredere enn scenen på de smaleste telefonene. */
@@ -237,12 +328,10 @@ ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
    beskar enda hardere. Da matcher bildeboksens sideforhold motivet, og cover
    beskjærer ingenting – forstørrelsen alene bestemmer hvor mye som er synlig.
 
-   108 % gir nok slark til å se seg rundt uten at motivet forsvinner.
-   PAN_X/PAN_Y i Showcase.tsx = (108 − 100) / 108 = 7.4. Endrer du det ene,
-   endre det andre. */
+   Selve forstørrelsen settes ikke lenger her, men per bilde i showcaseData
+   (standard 108 %), fordi noen motiver tåler mindre zoom enn andre. */
 ${SCOPE} .fv-stage{aspect-ratio:3/2}
 @media(max-width:640px){${SCOPE} .fv-stage{aspect-ratio:3/2}}
-${SCOPE} .fv-stage img{width:108%;height:108%}
 
 /* Punktlista i nøkkelboks-modalen står uten strek foran punktene. Designet
    tegnet en liten vannrett strek med ::before; her er det ren tekst. */

@@ -393,11 +393,11 @@
 .vertia-v2 .ft-bot a{color:var(--ink-500);text-decoration:underline;text-underline-offset:3px}
 .vertia-v2 .ft-bot a:hover{color:var(--ink-900)}
 /* reveal — kun når JS bekrefter IO-støtte */
-.vertia-v2.js-reveal .rv{opacity:0;transform:translateY(48px) scale(.985);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
-.vertia-v2.js-reveal .rv.in{opacity:1;transform:none}
-.vertia-v2.js-reveal .prop.rv,.vertia-v2.js-reveal .post.rv{transform:translateY(64px) scale(.97)}
-.vertia-v2.js-reveal .prop.rv.in,.vertia-v2.js-reveal .post.rv.in{transform:none}
-@media(prefers-reduced-motion:reduce){.vertia-v2.js-reveal .rv{opacity:1;transform:none;transition:none}}
+.js-reveal .vertia-v2 .rv{opacity:0;transform:translateY(48px) scale(.985);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.js-reveal .vertia-v2 .rv.in{opacity:1;transform:none}
+.js-reveal .vertia-v2 .prop.rv,.js-reveal .vertia-v2 .post.rv{transform:translateY(64px) scale(.97)}
+.js-reveal .vertia-v2 .prop.rv.in,.js-reveal .vertia-v2 .post.rv.in{transform:none}
+@media(prefers-reduced-motion:reduce){.js-reveal .vertia-v2 .rv{opacity:1;transform:none;transition:none}}
 
 /* ── Prosjekt-tillegg (ikke fra designfila) ──────────────────────────────── */
 
@@ -428,6 +428,48 @@
 .vertia-v2 .mq-finn{font:800 1.5rem/1 var(--sans);color:#0063FB}
 .vertia-v2 .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
 
+/* ── Tettere rytme ──────────────────────────────────────────────────────────
+   Designet er tegnet luftig: seksjoner på opptil 190 px topp og bunn, og
+   seksjonstitler opp mot 5,2 rem. På en side med tolv seksjoner ble summen for
+   mye – man scroller mye og leser lite, og overskriftene dominerer innholdet.
+
+   Verdiene under strammer inn jevnt over hele siden og beholder den
+   redaksjonelle stilen: samme skriftsnitt, samme proporsjoner mellom tittel og
+   ingress, bare mindre. Dette er et bevisst avvik fra designfila. */
+.vertia-v2 .section{padding:clamp(64px,7vw,108px) 0}
+.vertia-v2 .sec-head{margin-bottom:clamp(36px,3.6vw,56px)}
+.vertia-v2 .sec-title{font-size:clamp(2rem,3.8vw,3.2rem)}
+.vertia-v2 .sec-lead{font-size:1rem}
+
+/* Hero: mindre tittel og langt kortere avstand ned til knappene og badgene.
+   Designet skjøv dem 130 px og 150 px ned, som ga en nesten tom skjerm. */
+.vertia-v2 .hero h1{font-size:clamp(2rem,3.4vw,3.2rem)}
+.vertia-v2 .hero-cta{margin-top:clamp(36px,4.5vw,64px)}
+.vertia-v2 .hero-badges{margin-top:clamp(36px,5vw,72px)}
+.vertia-v2 .hero .wrap{padding-top:96px;padding-bottom:56px}
+
+/* Manifest, kontakt og fotmerket var de tre største typografiske flatene. */
+.vertia-v2 .manif h2{font-size:clamp(1.6rem,2.6vw,2.4rem)}
+.vertia-v2 .manif .sub{margin-top:26px;font-size:1rem}
+.vertia-v2 .manif-stats{margin-top:clamp(40px,4vw,60px)}
+.vertia-v2 .cta h2{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+.vertia-v2 .cta .ld{margin-top:22px;font-size:1rem}
+.vertia-v2 .cta-form{margin-top:34px}
+.vertia-v2 .ft-brand{font-size:clamp(3.2rem,10vw,8rem);margin:clamp(36px,4.5vw,60px) 0 clamp(20px,2vw,32px)}
+.vertia-v2 .ft{padding-top:clamp(48px,5vw,68px)}
+
+/* Steg, priser, boliger og fremvisning: mindre luft mellom elementene. */
+.vertia-v2 .stepx{padding:clamp(30px,3.2vw,50px) 0}
+.vertia-v2 .stepx h3{font-size:clamp(1.4rem,2vw,1.9rem)}
+.vertia-v2 .tiers{margin-top:clamp(32px,3.4vw,48px)}
+.vertia-v2 .tier{padding:clamp(26px,2.8vw,36px)}
+.vertia-v2 .tier .pct{font-size:clamp(2.6rem,3.8vw,3.6rem);margin-top:20px}
+.vertia-v2 .fv{margin-top:clamp(26px,2.8vw,38px)}
+.vertia-v2 .fv-sub{font-size:1rem;margin-top:16px}
+.vertia-v2 .faq summary{font-size:clamp(1.1rem,1.5vw,1.3rem)}
+.vertia-v2 .calc{padding:clamp(24px,2.8vw,38px)}
+.vertia-v2 .prop h3,.vertia-v2 .post h3{font-size:clamp(1.25rem,1.7vw,1.5rem)}
+
 /* ── Mobil ──────────────────────────────────────────────────────────────────
    Designet ble tegnet for desktop. Justeringene under gjelder kun små skjermer
    og berører ikke desktop-utseendet. */
@@ -440,17 +482,63 @@
   .vertia-v2 .faq summary{padding:26px 0}
 }
 
-/* Knappene i heroen strekker seg over hele bredden på smale skjermer i stedet
-   for å stå som to smale kolonner. */
-@media(max-width:560px){
-  .vertia-v2 .hero-cta .btn{width:100%}
-}
+/* ── Mobil: egen, strammere skala ───────────────────────────────────────────
+   Designet er tegnet for desktop og skalerer ned via vw-baserte clamp-verdier.
+   På telefon ble resultatet at heroen fylte hele skjermen og overskriftene tok
+   mesteparten av plassen. Under 640 px settes derfor faste, mindre verdier i
+   stedet for å la vw bestemme. Mobil prioriteres foran desktop der de to
+   trekker i hver sin retning. */
+@media(max-width:640px){
+  /* Heroen skal ikke fylle viewporten. Man skal se at det finnes noe under. */
+  .vertia-v2 .hero{min-height:78svh}
+  .vertia-v2 .hero .wrap{padding-top:82px;padding-bottom:38px}
+  .vertia-v2 .hero h1{font-size:1.75rem;line-height:1.18}
+  .vertia-v2 .hero-kicker{font-size:.6rem;letter-spacing:.22em;margin-bottom:18px}
+  .vertia-v2 .hero-cta{margin-top:26px;gap:10px;grid-template-columns:1fr}
+  .vertia-v2 .hero-cta .btn{width:100%;padding:12px 18px;font-size:.85rem}
 
-/* Skillestrekene mellom hero-badgene tar for mye plass når listen brytes over
-   flere linjer på telefon. */
-@media(max-width:560px){
-  .vertia-v2 .hero-badges{flex-direction:column;gap:10px}
-  .vertia-v2 .hero-badges li+li::before{display:none}
+  /* Punktene på én linje med prikk mellom, ikke stablet. Designet brukte en
+     loddrett strek med 22 px luft på hver side, som ble altfor bredt her. */
+  .vertia-v2 .hero-badges{margin-top:24px;flex-wrap:nowrap;justify-content:center;gap:0;font-size:.7rem}
+  .vertia-v2 .hero-badges li{white-space:nowrap}
+  .vertia-v2 .hero-badges li+li::before{content:"·";width:auto;height:auto;background:none;margin:0 7px;color:rgba(255,255,255,.55)}
+
+  .vertia-v2 .hdr-in{height:60px}
+  .vertia-v2 .btn{padding:13px 22px;font-size:.85rem}
+
+  /* Seksjonsluft og overskrifter kraftig ned. */
+  .vertia-v2 .section{padding:44px 0}
+  .vertia-v2 .chan-band{padding:26px 0}
+  .vertia-v2 .sec-head{margin-bottom:24px}
+  .vertia-v2 .sec-title{font-size:1.6rem}
+  .vertia-v2 .sec-lead{font-size:.95rem}
+  .vertia-v2 .manif h2{font-size:1.45rem}
+  .vertia-v2 .manif .sub{margin-top:18px;font-size:.95rem}
+  .vertia-v2 .manif-stats{margin-top:30px}
+  .vertia-v2 .manif-stats b{font-size:1.6rem}
+  .vertia-v2 .cta h2{font-size:1.6rem}
+  .vertia-v2 .cta .ld{font-size:.95rem}
+  .vertia-v2 .stepx{padding:26px 0;gap:20px}
+  .vertia-v2 .stepx h3{font-size:1.25rem}
+  .vertia-v2 .faq summary{font-size:1rem;padding:18px 0}
+  .vertia-v2 .fv-sub{font-size:.95rem}
+  .vertia-v2 .calc{padding:22px}
+  .vertia-v2 .calc-top h3{font-size:1.2rem}
+  .vertia-v2 .prop h3,.vertia-v2 .post h3{font-size:1.1rem}
+  .vertia-v2 .startpk{padding:24px 22px}
+  .vertia-v2 .startpk h3{font-size:1.35rem}
+  .vertia-v2 .ft{padding-top:40px;gap:30px}
+  .vertia-v2 .ft-brand{font-size:2.8rem;margin:26px 0 14px}
+
+  /* Prispakkene lå åpne under hverandre og ble en veldig lang kolonne. På
+     telefon er de nå swipebare kort med snap – samme språk som kortkarusellene
+     ellers på siden, og uten JS. */
+  .vertia-v2 .tiers{display:flex;border:0;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+  .vertia-v2 .tiers::-webkit-scrollbar{display:none}
+  .vertia-v2 .tier{flex:0 0 84%;scroll-snap-align:center;border:1px solid var(--sand-300);padding:26px 24px}
+  .vertia-v2 .tier:last-child{border-bottom:1px solid var(--sand-300)}
+  .vertia-v2 .tier.on{border-color:var(--brand-600)}
+  .vertia-v2 .tier .pct{font-size:2.6rem;margin-top:16px}
 }
 
 /* «Gå videre»-etiketten kan bli bredere enn scenen på de smaleste telefonene. */
@@ -468,12 +556,10 @@
    beskar enda hardere. Da matcher bildeboksens sideforhold motivet, og cover
    beskjærer ingenting – forstørrelsen alene bestemmer hvor mye som er synlig.
 
-   108 % gir nok slark til å se seg rundt uten at motivet forsvinner.
-   PAN_X/PAN_Y i Showcase.tsx = (108 − 100) / 108 = 7.4. Endrer du det ene,
-   endre det andre. */
+   Selve forstørrelsen settes ikke lenger her, men per bilde i showcaseData
+   (standard 108 %), fordi noen motiver tåler mindre zoom enn andre. */
 .vertia-v2 .fv-stage{aspect-ratio:3/2}
 @media(max-width:640px){.vertia-v2 .fv-stage{aspect-ratio:3/2}}
-.vertia-v2 .fv-stage img{width:108%;height:108%}
 
 /* Punktlista i nøkkelboks-modalen står uten strek foran punktene. Designet
    tegnet en liten vannrett strek med ::before; her er det ren tekst. */

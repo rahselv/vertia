@@ -22,15 +22,18 @@ import { useEffect } from "react";
  * igjen – et tydelig blaff ved lasting. Designet unngikk dette ved å kjøre
  * scriptet sitt synkront; dette er samme grep.
  *
+ * Klassen settes på <html>, ikke på wrapper-diven. React eier wrapperen, og en
+ * klasse lagt der før hydrering ga «Prop `className` did not match» – hvorpå
+ * React kunne fjerne klassen igjen og avdekkingen aldri slo inn.
+ *
  * Timeouten er en livline: hvis JS-bunten aldri hydrerer, vises innholdet
  * likevel etter 2,5 s. Uten den ville en feilet bundle etterlatt en tom side.
  */
 export const revealBootstrap = `
 if('IntersectionObserver' in window){
-  var r=document.currentScript.parentElement;
-  r.classList.add('js-reveal');
+  document.documentElement.classList.add('js-reveal');
   setTimeout(function(){
-    r.querySelectorAll('.rv:not(.in)').forEach(function(e){e.classList.add('in')});
+    document.querySelectorAll('.vertia-v2 .rv:not(.in)').forEach(function(e){e.classList.add('in')});
   },2500);
 }`;
 

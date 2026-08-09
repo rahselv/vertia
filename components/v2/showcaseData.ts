@@ -20,12 +20,27 @@
  * ───────────────────────────────────────────────────────────────────────────
  */
 
-/** Kildebildet. Bredde og høyde er de faktiske pikselmålene, som next/image
- *  trenger for å regne ut riktige srcset-bredder og unngå layouthopp. */
+/**
+ * Kildebildet.
+ *
+ * `width`/`height` er de faktiske pikselmålene, som next/image trenger for å
+ * regne ut riktige srcset-bredder og unngå layouthopp.
+ *
+ * `zoom` er hvor mye bildet forstørres i scenen, i prosent. Standard er 108,
+ * som gir litt slark å panorere i. Sett den lavere på bilder som allerede er
+ * tett på motivet – da beskjæres de mindre. 100 betyr ingen panorering.
+ *
+ * `fit: "contain"` viser hele bildet mot sandflaten i stedet for å fylle
+ * rammen. Dette er designets NEAR-mekanisme. Bruk den sparsomt: bildet blir
+ * mindre og får luft på sidene. Stående foto er IKKE automatisk contain –
+ * de fyller rammen som alle andre.
+ */
 export type ShowcaseImage = {
   src: string;
   width: number;
   height: number;
+  zoom?: number;
+  fit?: "cover" | "contain";
 };
 
 export type Room = {
@@ -117,9 +132,9 @@ export const apartments: Apartment[] = [
         name: "Soverom",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 1/2 (demobilde)
-          { src: "/images/fremvisning/l1/05.jpg", width: 6000, height: 4000 },
+          { src: "/images/fremvisning/l1/05.jpg", width: 2400, height: 1600 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 2/2 (demobilde)
-          { src: "/images/fremvisning/l1/06.jpg", width: 6000, height: 4000 },
+          { src: "/images/fremvisning/l1/06.jpg", width: 2400, height: 1600 },
         ],
       },
       {
@@ -135,9 +150,9 @@ export const apartments: Apartment[] = [
         name: "Balkong",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 1/2 (demobilde)
-          { src: "/images/fremvisning/l1/09.jpg", width: 2048, height: 1365 },
+          { src: "/images/fremvisning/l1/09.jpg", zoom: 102, width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 2/2 (demobilde)
-          { src: "/images/fremvisning/l1/10.jpg", width: 2048, height: 1365 },
+          { src: "/images/fremvisning/l1/10.jpg", zoom: 102, width: 2048, height: 1365 },
         ],
       },
     ],

@@ -1,55 +1,50 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { apartments, walkPositions } from "./showcaseData";
+import {
+  apartments,
+  walkPositions,
+  type ShowcaseImage,
+} from "./showcaseData";
 
 /**
- * Hvor mye bildet kan panoreres, i prosent av bildets egen bredde/høyde.
- *
- * Henger sammen med `.fv-stage img{width;height}` i CSS-en:
- * pan = (størrelse − 100) / størrelse. Med 108 % blir det 7.4. Designet hadde
- * 150 % x 136 %, altså 33.4 og 26, men da så man bare en flik av rommet.
- *
- * Endrer du CSS-en, endre disse i samme slengen.
+ * Standard forstørrelse i scenen, i prosent. Designet hadde 150 % x 136 %, men
+ * da så man bare en flik av rommet. Størrelsen settes nå per bilde i
+ * showcaseData, med denne som standard; CSS-en styrer den ikke lenger.
  */
-const PAN_X = 7.4;
-const PAN_Y = 7.4;
+const DEFAULT_ZOOM = 108;
 
 /**
- * Stående foto i en liggende ramme kan ikke fylles uten å kutte det meste av
- * motivet. De vises derfor i sin helhet mot sandflaten, uten panorering.
+ * Stiler og pan-faktorer for ett bilde.
  *
- * Dette er designets egen mekanisme: der kunne enkeltbilder legges i et
- * NEAR-sett og fikk `contain` på 100 % med panoreringen satt til 0. Settet sto
- * tomt, så alle bilder fikk hard zoom. Vi utleder det fra bildets format i
- * stedet, så det holder seg riktig når bildene byttes ut.
+ * Panoreringen er (zoom − 100) / zoom: et bilde forstørret til 108 % kan
+ * flyttes 7,4 % av sin egen bredde før kanten slipper rammen.
+ *
+ * `contain` settes bare når bildet eksplisitt ber om det. Tidligere utledet vi
+ * det av at bildet var stående, men da krympet bl.a. badbildene i stedet for å
+ * fylle rammen slik resten gjør.
  */
-function isPortrait(image: { width: number; height: number }) {
-  return image.height > image.width;
-}
+function fitProps(image: ShowcaseImage) {
+  const zoom = image.zoom ?? DEFAULT_ZOOM;
+  // I prosent, ikke brøk: transformen skriver translate3d(...%).
+  const pan = (((zoom - 100) / zoom) * 100).toFixed(3);
+  const contain = image.fit === "contain";
 
-/** Inline-stiler og pan-faktorer for ett bilde. */
-function fitProps(image: { width: number; height: number }) {
-  const portrait = isPortrait(image);
   return {
-    "data-kx": portrait ? 0 : PAN_X,
-    "data-ky": portrait ? 0 : PAN_Y,
-    fitStyle: portrait
-      ? ({
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-        } as const)
-      : undefined,
+    "data-kx": contain ? 0 : pan,
+    "data-ky": contain ? 0 : pan,
+    fitStyle: contain
+      ? ({ width: "100%", height: "100%", objectFit: "contain" } as const)
+      : ({ width: `${zoom}%`, height: `${zoom}%` } as const),
   };
 }
 
 /**
- * Bildet dekker 150 % av scenens bredde (det er panoreringen som gjør resten
- * synlig). Scenen er maks 1180 px bred, derav 1770 px på store skjermer.
+ * Scenen er maks 1180 px bred, og bildet litt bredere enn den igjen (zoom).
+ * Rundet opp til 1300 px på store skjermer.
  */
-const SIZES = "(min-width: 1240px) 1770px, 150vw";
+const SIZES = "(min-width: 1240px) 1300px, 115vw";
 
 /**
  * Demofotoene er dekorative og delvis utenfor synsfeltet til enhver tid, så vi
@@ -112,24 +107,89 @@ export default function ShowcaseV2() {
   const currentRef = useRef(current);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Ligger bildet allerede i cachen, rekker aldri `onLoad` å fyre – da ville
-  // det blitt stående på opacity 0. Samme sikring som designet hadde med
-  // `img.complete`.
+  /**
+   * Skifte av bilde. Må gjøres i ÉN effekt.
+   *
+   * Dette lå tidligere i to: én som sjekket `img.complete` og satte loaded,
+   * og én som satte forrige bilde og nullstilte loaded. Effekter kjører i
+   * deklarasjonsrekkefølge, så et bilde som allerede lå i nettleserens cache
+   * ble først markert ferdig og deretter satt tilbake til «ikke lastet» – og
+   * siden `onLoad` aldri fyrer for et ferdig bilde, ble det stående usynlig
+   * bak det forrige. Rombytter så da ut som om ingenting skjedde.
+   *
+   * Nabobildene forhåndslastes, så nettopp cache-tilfellet er det vanlige.
+   */
   useEffect(() => {
+    if (currentRef.current.src !== current.src) {
+      setPrevious(currentRef.current);
+      currentRef.current = current;
+      panRef.current?.reset();
+    }
+
     const el = imgRef.current;
-    if (el?.complete && el.naturalWidth) {
+
+    const show = () => {
       panRef.current?.apply();
       setLoaded(true);
+    };
+
+    // Uten ref har vi ingen måte å vite når bildet er klart. Da viser vi det
+    // heller med én gang enn å risikere at det blir stående usynlig.
+    if (!el) {
+      show();
+      return;
     }
+
+    if (el.complete && el.naturalWidth) {
+      show();
+      return;
+    }
+
+    setLoaded(false);
+
+    // Native lytter, ikke Reacts onLoad. onLoad fyrte ikke for bildene her –
+    // de ble ferdig lastet (complete = true, naturalWidth > 0) mens
+    // opacity ble stående på 0, så et rombytte så ut som om ingenting skjedde.
+    el.addEventListener("load", show);
+    el.addEventListener("error", show);
+
+    // Siste skanse: bildet skal aldri kunne bli hengende usynlig.
+    const failsafe = window.setTimeout(show, 3000);
+
+    return () => {
+      el.removeEventListener("load", show);
+      el.removeEventListener("error", show);
+      window.clearTimeout(failsafe);
+    };
   }, [current]);
 
-  useEffect(() => {
-    if (currentRef.current.src === current.src) return;
-    setPrevious(currentRef.current);
-    setLoaded(false);
-    currentRef.current = current;
-    panRef.current?.reset();
-  }, [current]);
+  /**
+   * Nabobildene lastes i bakgrunnen mens brukeren ser på det aktive: neste og
+   * forrige bilde i rommet, og første bilde i rommet før og etter. Da er
+   * bildet som regel ferdig hentet i det man klikker, og rombyttet blir en ren
+   * crossfade i stedet for å vente på nettverket.
+   *
+   * De rendres i scenen med full størrelse og opacity 0. Størrelsen er ikke
+   * pynt: `sizes` velger srcset-variant ut fra elementets layoutbredde, så et
+   * lite skjult element ville forhåndslastet feil – og for liten – variant.
+   */
+  const neighbours = useMemo(() => {
+    const list: ShowcaseImage[] = [];
+    const images = room.images;
+    if (images.length > 1) {
+      list.push(images[(imgIdx + 1) % images.length]);
+      list.push(images[(imgIdx - 1 + images.length) % images.length]);
+    }
+    const rooms = apartment.rooms;
+    list.push(rooms[(roomIdx + 1) % rooms.length].images[0]);
+    list.push(rooms[(roomIdx - 1 + rooms.length) % rooms.length].images[0]);
+
+    return list.filter(
+      (image, i, all) =>
+        image.src !== current.src &&
+        all.findIndex((other) => other.src === image.src) === i,
+    );
+  }, [apartment, room, roomIdx, imgIdx, current]);
 
   // Rydd bort det gamle bildet når overgangen (.55s i CSS) er ferdig.
   useEffect(() => {
@@ -154,17 +214,32 @@ export default function ShowcaseV2() {
 
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
 
+    // Nodene og pan-faktorene deres caches. Å kjøre querySelectorAll og
+    // parse dataset på nytt for hver frame kostet unødvendig arbeid midt i
+    // en dra-bevegelse.
+    let targets: { el: HTMLImageElement; kx: number; ky: number }[] = [];
+    const collect = () => {
+      targets = Array.from(stage.querySelectorAll("img")).map((el) => ({
+        el,
+        kx: Number(el.dataset.kx ?? 0),
+        ky: Number(el.dataset.ky ?? 0),
+      }));
+    };
+    collect();
+
+    // React bytter ut bildene ved rom- og bildeskifte; da må cachen fornyes.
+    const observer = new MutationObserver(collect);
+    observer.observe(stage, { childList: true });
+
     const apply = () => {
-      stage.querySelectorAll("img").forEach((img) => {
-        // Hvert bilde bærer sine egne pan-faktorer. Stående foto har 0 og
-        // står dermed stille mens liggende panorerer.
-        const kx = Number(img.dataset.kx ?? PAN_X);
-        const ky = Number(img.dataset.ky ?? PAN_Y);
-        const transform = `translate(${(-(px * kx)).toFixed(3)}%,${(-(
-          py * ky
-        )).toFixed(3)}%)`;
-        if (img.style.transform !== transform) img.style.transform = transform;
-      });
+      for (const t of targets) {
+        // translate3d framfor translate: da holder bildet seg på sitt eget
+        // GPU-lag og hver frame blir en ren sammensetning, ikke en ommaling.
+        const transform = `translate3d(${(-(px * t.kx)).toFixed(3)}%,${(-(
+          py * t.ky
+        )).toFixed(3)}%,0)`;
+        if (t.el.style.transform !== transform) t.el.style.transform = transform;
+      }
     };
 
     const step = () => {
@@ -225,6 +300,7 @@ export default function ShowcaseV2() {
 
     return () => {
       cancelAnimationFrame(frame);
+      observer.disconnect();
       stage.removeEventListener("pointerdown", onDown);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerup", onUp);
@@ -277,7 +353,6 @@ export default function ShowcaseV2() {
             style={{
               margin: "0 auto",
               maxWidth: "none",
-              fontSize: "clamp(2.2rem,4vw,3.4rem)",
             }}
           >
             Boligen vises i verdensklasse
@@ -333,15 +408,32 @@ export default function ShowcaseV2() {
               sizes={SIZES}
               quality={QUALITY}
               alt={alt}
+              // Det aktive bildet er sidens innhold her og ikke noe som skal
+              // vente pa lat lasting.
+              loading="eager"
               data-kx={fitProps(current)["data-kx"]}
               data-ky={fitProps(current)["data-ky"]}
               style={{ ...fitProps(current).fitStyle, opacity: loaded ? 1 : 0 }}
-              onLoad={() => {
-                // Bildet er nytt i DOM, så det har ennå ingen pan-transform.
-                panRef.current?.apply();
-                setLoaded(true);
-              }}
             />
+
+            {neighbours.map((image) => (
+              <Image
+                key={`forhandslast-${image.src}`}
+                src={image.src}
+                width={image.width}
+                height={image.height}
+                sizes={SIZES}
+                quality={QUALITY}
+                alt=""
+                aria-hidden="true"
+                // Lat lasting ville gjort forhandslastingen meningslos.
+                loading="eager"
+                data-preload="true"
+                data-kx={0}
+                data-ky={0}
+                style={{ ...fitProps(image).fitStyle, opacity: 0 }}
+              />
+            ))}
 
             <button
               type="button"

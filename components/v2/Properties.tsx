@@ -54,7 +54,6 @@ export default function PropertiesV2() {
             className="sec-title"
             style={{
               margin: "0 auto",
-              fontSize: "clamp(2rem,3.6vw,3.2rem)",
               maxWidth: "none",
             }}
           >
