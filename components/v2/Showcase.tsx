@@ -1,11 +1,25 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { apartments, walkPositions } from "./showcaseData";
 
 /** Hvor mye bildet kan panoreres, i prosent. Fra designet. */
 const PAN_X = 33.4;
 const PAN_Y = 26;
+
+/**
+ * Bildet dekker 150 % av scenens bredde (det er panoreringen som gjør resten
+ * synlig). Scenen er maks 1180 px bred, derav 1770 px på store skjermer.
+ */
+const SIZES = "(min-width: 1240px) 1770px, 150vw";
+
+/**
+ * Demofotoene er dekorative og delvis utenfor synsfeltet til enhver tid, så vi
+ * senker kvaliteten litt under Next sin standard på 75. Det merkes ikke, og
+ * kutter en god del vekt på mobildata.
+ */
+const QUALITY = 70;
 
 type PanController = {
   reset: () => void;
@@ -36,9 +50,6 @@ export default function ShowcaseV2() {
   const [hintVisible, setHintVisible] = useState(true);
 
   const stageRef = useRef<HTMLDivElement>(null);
-  const imgARef = useRef<HTMLImageElement>(null);
-  const imgBRef = useRef<HTMLImageElement>(null);
-  const frontRef = useRef<"a" | "b">("a");
   const panRef = useRef<PanController | null>(null);
 
   const apartment = apartments[aptIdx];
@@ -47,37 +58,48 @@ export default function ShowcaseV2() {
   const nextRoom = apartment.rooms[(roomIdx + 1) % apartment.rooms.length];
   const walkPos = walkPositions[roomIdx % walkPositions.length];
 
+  const current = room.images[imgIdx];
+  const alt = `${apartment.label} – ${room.name}, bilde ${imgIdx + 1} av ${
+    room.images.length
+  }`;
+
   // ── Crossfade ────────────────────────────────────────────────────────────
-  const showImage = useCallback((src: string, alt: string) => {
-    const a = imgARef.current;
-    const b = imgBRef.current;
-    if (!a || !b) return;
+  // Det forrige bildet blir liggende bak til det nye har lastet, og fades så
+  // bort. Det nye bildet er selv sin egen forhåndslasting: det ligger i DOM og
+  // henter seg selv mens det gamle fortsatt vises.
+  //
+  // Designet gjorde dette imperativt ved å skrive .src på to <img>. Vi går via
+  // state fordi next/image eier src-attributtet og genererer srcset selv.
+  const [previous, setPrevious] = useState<typeof current | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const currentRef = useRef(current);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-    const isA = frontRef.current === "a";
-    const front = isA ? a : b;
-    const back = isA ? b : a;
-
-    const reveal = () => {
-      back.style.opacity = "1";
-      front.style.opacity = "0";
-      frontRef.current = isA ? "b" : "a";
-    };
-
-    back.onload = () => {
-      back.onload = null;
+  // Ligger bildet allerede i cachen, rekker aldri `onLoad` å fyre – da ville
+  // det blitt stående på opacity 0. Samme sikring som designet hadde med
+  // `img.complete`.
+  useEffect(() => {
+    const el = imgRef.current;
+    if (el?.complete && el.naturalWidth) {
       panRef.current?.apply();
-      reveal();
-    };
-    back.alt = alt;
-    back.src = src;
-
-    // Ligger bildet i cachen fyrer ikke load på nytt; da viser vi det direkte.
-    if (back.complete && back.naturalWidth) {
-      back.onload = null;
-      panRef.current?.apply();
-      reveal();
+      setLoaded(true);
     }
-  }, []);
+  }, [current]);
+
+  useEffect(() => {
+    if (currentRef.current.src === current.src) return;
+    setPrevious(currentRef.current);
+    setLoaded(false);
+    currentRef.current = current;
+    panRef.current?.reset();
+  }, [current]);
+
+  // Rydd bort det gamle bildet når overgangen (.55s i CSS) er ferdig.
+  useEffect(() => {
+    if (!loaded || !previous) return;
+    const timer = window.setTimeout(() => setPrevious(null), 600);
+    return () => window.clearTimeout(timer);
+  }, [loaded, previous]);
 
   // ── Panorering ───────────────────────────────────────────────────────────
   useEffect(() => {
@@ -170,24 +192,6 @@ export default function ShowcaseV2() {
     };
   }, []);
 
-  // ── Bytt bilde når bolig, rom eller indeks endres ────────────────────────
-  useEffect(() => {
-    panRef.current?.reset();
-    showImage(
-      room.images[imgIdx],
-      `${apartment.label} – ${room.name}, bilde ${imgIdx + 1} av ${
-        room.images.length
-      }`,
-    );
-
-    // Forhåndslast neste bilde i rommet og første bilde i neste rom, så
-    // overgangen blir umiddelbar.
-    const preloadNext = new Image();
-    preloadNext.src = room.images[(imgIdx + 1) % room.images.length];
-    const preloadRoom = new Image();
-    preloadRoom.src = nextRoom.images[0];
-  }, [apartment, room, imgIdx, nextRoom, showImage]);
-
   // ── «Gå videre»: zoom framover, så inn i neste rom ───────────────────────
   const walk = () => {
     const stage = stageRef.current;
@@ -265,10 +269,34 @@ export default function ShowcaseV2() {
           </div>
 
           <div className="fv-stage" ref={stageRef}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img ref={imgARef} alt="" decoding="async" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img ref={imgBRef} alt="" decoding="async" style={{ opacity: 0 }} />
+            {previous && (
+              <Image
+                key={`${previous.src}-ut`}
+                src={previous.src}
+                width={previous.width}
+                height={previous.height}
+                sizes={SIZES}
+                quality={QUALITY}
+                alt=""
+                aria-hidden="true"
+              />
+            )}
+            <Image
+              key={current.src}
+              ref={imgRef}
+              src={current.src}
+              width={current.width}
+              height={current.height}
+              sizes={SIZES}
+              quality={QUALITY}
+              alt={alt}
+              style={{ opacity: loaded ? 1 : 0 }}
+              onLoad={() => {
+                // Bildet er nytt i DOM, så det har ennå ingen pan-transform.
+                panRef.current?.apply();
+                setLoaded(true);
+              }}
+            />
 
             <button
               type="button"

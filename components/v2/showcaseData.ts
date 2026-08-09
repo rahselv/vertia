@@ -8,19 +8,29 @@
  *  Dette er demobilder, ikke boliger Vertia faktisk drifter. Hver oppføring har
  *  en TODO om at den må erstattes med foto av en ekte bolig før lansering.
  *
- *  To ting å være klar over:
- *  - Bildene er ubehandlede, 2048 px brede, til sammen 14,5 MB. l1/05.jpg og
- *    l1/06.jpg er alene på 2,8 og 2,5 MB. De bør konverteres til WebP eller
- *    gå gjennom next/image før lansering.
- *  - Alt-tekstene genereres av Showcase-komponenten som «bolig – rom, bilde
- *    x av y». Det er nøytralt og korrekt, men beskriver ikke motivet. Skriv
- *    ekte alt-tekster når de ekte bildene kommer inn.
+ *  Filene her er ubehandlede originaler – opptil 6000 px brede og 2,8 MB. De
+ *  serveres ALDRI direkte: Showcase rendrer dem med next/image, som skalerer
+ *  ned til den bredden skjermen faktisk trenger og leverer WebP til nettlesere
+ *  som støtter det. Originalene beholdes fordi de er kilden optimalisereren
+ *  jobber mot; bytter du et bilde, legg inn originalen og oppdater width/height.
+ *
+ *  Alt-tekstene genereres av Showcase som «bolig – rom, bilde x av y». Det er
+ *  nøytralt og korrekt, men beskriver ikke motivet. Skriv ekte alt-tekster når
+ *  de ekte bildene kommer inn.
  * ───────────────────────────────────────────────────────────────────────────
  */
 
+/** Kildebildet. Bredde og høyde er de faktiske pikselmålene, som next/image
+ *  trenger for å regne ut riktige srcset-bredder og unngå layouthopp. */
+export type ShowcaseImage = {
+  src: string;
+  width: number;
+  height: number;
+};
+
 export type Room = {
   name: string;
-  images: string[];
+  images: ShowcaseImage[];
 };
 
 export type Apartment = {
@@ -38,45 +48,45 @@ export const apartments: Apartment[] = [
         name: "Kjøkken",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 1/3 (demobilde)
-          "/images/fremvisning/l1/01.jpg",
+          { src: "/images/fremvisning/l1/01.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 2/3 (demobilde)
-          "/images/fremvisning/l1/02.jpg",
+          { src: "/images/fremvisning/l1/02.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, kjøkken 3/3 (demobilde)
-          "/images/fremvisning/l1/03.jpg",
+          { src: "/images/fremvisning/l1/03.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Entré",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, entré 1/1 (demobilde)
-          "/images/fremvisning/l1/04.jpg",
+          { src: "/images/fremvisning/l1/04.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Soverom",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 1/2 (demobilde)
-          "/images/fremvisning/l1/05.jpg",
+          { src: "/images/fremvisning/l1/05.jpg", width: 6000, height: 4000 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, soverom 2/2 (demobilde)
-          "/images/fremvisning/l1/06.jpg",
+          { src: "/images/fremvisning/l1/06.jpg", width: 6000, height: 4000 },
         ],
       },
       {
         name: "Bad",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 1/2 (demobilde)
-          "/images/fremvisning/l1/07.jpg",
+          { src: "/images/fremvisning/l1/07.jpg", width: 1365, height: 2048 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, bad 2/2 (demobilde)
-          "/images/fremvisning/l1/08.jpg",
+          { src: "/images/fremvisning/l1/08.jpg", width: 1365, height: 2048 },
         ],
       },
       {
         name: "Balkong",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 1/2 (demobilde)
-          "/images/fremvisning/l1/09.jpg",
+          { src: "/images/fremvisning/l1/09.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig A, balkong 2/2 (demobilde)
-          "/images/fremvisning/l1/10.jpg",
+          { src: "/images/fremvisning/l1/10.jpg", width: 2048, height: 1365 },
         ],
       },
     ],
@@ -89,45 +99,45 @@ export const apartments: Apartment[] = [
         name: "Stue",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 1/2 (demobilde)
-          "/images/fremvisning/l2/01.jpg",
+          { src: "/images/fremvisning/l2/01.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, stue 2/2 (demobilde)
-          "/images/fremvisning/l2/02.jpg",
+          { src: "/images/fremvisning/l2/02.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Kjøkken",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 1/3 (demobilde)
-          "/images/fremvisning/l2/03.jpg",
+          { src: "/images/fremvisning/l2/03.jpg", width: 2048, height: 1366 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 2/3 (demobilde)
-          "/images/fremvisning/l2/04.jpg",
+          { src: "/images/fremvisning/l2/04.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, kjøkken 3/3 (demobilde)
-          "/images/fremvisning/l2/05.jpg",
+          { src: "/images/fremvisning/l2/05.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Soverom",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, soverom 1/1 (demobilde)
-          "/images/fremvisning/l2/06.jpg",
+          { src: "/images/fremvisning/l2/06.jpg", width: 2048, height: 1365 },
         ],
       },
       {
         name: "Bad",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 1/3 (demobilde)
-          "/images/fremvisning/l2/08.jpg",
+          { src: "/images/fremvisning/l2/08.jpg", width: 2048, height: 1365 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 2/3 (demobilde)
-          "/images/fremvisning/l2/07.jpg",
+          { src: "/images/fremvisning/l2/07.jpg", width: 1365, height: 2048 },
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, bad 3/3 (demobilde)
-          "/images/fremvisning/l2/09.jpg",
+          { src: "/images/fremvisning/l2/09.jpg", width: 1365, height: 2048 },
         ],
       },
       {
         name: "Balkong",
         images: [
           // TODO: erstatt med foto av ekte bolig før lansering – Bolig B, balkong 1/1 (demobilde)
-          "/images/fremvisning/l2/10.jpg",
+          { src: "/images/fremvisning/l2/10.jpg", width: 2048, height: 1365 },
         ],
       },
     ],
