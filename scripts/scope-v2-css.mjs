@@ -227,6 +227,14 @@ ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
   ${SCOPE} .fvw-lbl{font-size:.7rem;padding:6px 11px}
 }
 
+/* Samtykke. Designet har ingen slik boks, men v1 hadde en påkrevd – den er
+   nødvendig etter markedsføringsloven § 15 og skal ikke falle bort i redesignet. */
+${SCOPE} .consent{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0;max-width:46rem;font-size:.88rem;line-height:1.6;cursor:pointer}
+${SCOPE} .consent input{flex:none;width:19px;height:19px;margin-top:2px;accent-color:var(--acc)}
+${SCOPE} .cta .consent{color:rgba(250,246,238,.75);flex:1 0 100%}
+${SCOPE} .cta .consent a{color:var(--cream);text-decoration:underline;text-underline-offset:3px}
+${SCOPE} .cta .consent a:hover{color:#fff}
+
 /* Bekreftelse etter innsendt skjema. Designet bytter ut skjemaet med inline
    stiler i JS; vi gjør det med klasser i stedet. */
 ${SCOPE} .form-ok{margin:26px 0 0;line-height:1.7;color:var(--ink-500)}

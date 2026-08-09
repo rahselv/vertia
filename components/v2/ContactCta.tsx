@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import ArrowIcon from "./ArrowIcon";
 import { submitToFormspree } from "@/lib/formspree";
 
@@ -14,19 +15,23 @@ import { submitToFormspree } from "@/lib/formspree";
 export default function ContactCtaV2() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!email.trim().includes("@")) return;
+    // Skjemaet har noValidate (designet stiller sin egen validering), så
+    // `required` alene stopper ikke innsending. Vi sjekker eksplisitt.
+    if (!email.trim().includes("@") || !consent) return;
 
     setStatus("submitting");
     try {
       await submitToFormspree({
         email,
         phone,
+        consent: "ja",
         _subject: "Tilbudsforespørsel fra vertia.no",
       });
       setStatus("success");
@@ -95,6 +100,24 @@ export default function ContactCtaV2() {
               {status === "submitting" ? "Sender …" : "Få et tilbud"}
               <ArrowIcon />
             </button>
+
+            {/* Samtykke – IKKE forhåndskrysset. Påkrevd etter
+                markedsføringsloven § 15. Designet hadde ingen slik boks, men
+                v1 hadde, og den skal ikke falle bort i redesignet. */}
+            <label className="consent">
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+              />
+              <span>
+                Jeg samtykker til å bli kontaktet om tjenesten. Se hvordan vi
+                behandler opplysningene i{" "}
+                <Link href="/personvern">personvernerklæringen</Link>.
+              </span>
+            </label>
           </form>
         )}
 
