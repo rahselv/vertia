@@ -12,9 +12,16 @@ export const metadata: Metadata = {
     "Bak Vertia står et team med god erfaring fra eiendomsmarkedet. Vi drifter korttidsutleie for boligeiere som vil ha inntekten uten det praktiske.",
 };
 
-const avsnitt: string[] = [
-  "Bak Vertia står et team med god erfaring fra eiendomsmarkedet. Vi har jobbet med utleie, drift og forvaltning av bolig i mange år, og kjenner både mulighetene og fallgruvene ved korttidsutleie fra innsiden.",
-  "Vi startet Vertia fordi vi så at mange boligeiere sitter på en bolig som kunne tjent penger når den står stille, men som lar være fordi det virker for tidkrevende og komplisert. Det ville vi gjøre noe med.",
+/**
+ * Ingress over portrettene.
+ *
+ * Siden hadde tidligere en egen «Teamet bak Vertia»-seksjon øverst med fire
+ * avsnitt, etterfulgt av «Menneskene bak Vertia» med portrettene. De to
+ * innledningene sa i praksis det samme om erfaring og bakgrunn. Seksjonene er
+ * slått sammen til én, og bare de to avsnittene som tilfører noe nytt – hva vi
+ * faktisk gjør, og hvordan vi jobber – er beholdt.
+ */
+const ingress: string[] = [
   "Ideen er enkel: du beholder boligen, kontrollen og inntekten, mens vi tar oss av det praktiske. Foto, annonse, prising, gjestekommunikasjon, nøkkelfri innsjekk og vask. Du bestemmer selv hvilke dager boligen er tilgjengelig, og kan alltid holde av dagene du vil bruke den selv.",
   "Vi er opptatt av å være ryddige og etterrettelige. Ingen skjulte kostnader, tydelige rapporter og en fast kontaktperson som hjelper deg hele veien. Målet er at utleien skal føles trygg og rolig, ikke som enda en jobb.",
 ];
@@ -56,13 +63,15 @@ export default function OmOssPage() {
             <div className="mx-auto max-w-2xl">
               <Reveal>
                 <p className="eyebrow mb-4">Om oss</p>
+                {/* Overskriften fra den nedlagte nedre seksjonen er nå sidens
+                    h1. Siden skal ha nøyaktig én. */}
                 <h1 className="font-display text-3xl font-medium leading-[1.1] tracking-[-0.03em] text-ink-900 sm:text-4xl md:text-[2.75rem]">
-                  Teamet bak Vertia
+                  Menneskene bak Vertia
                 </h1>
               </Reveal>
 
               <div className="mt-10 space-y-6">
-                {avsnitt.map((tekst, i) => (
+                {ingress.map((tekst, i) => (
                   <Reveal key={i}>
                     <p className="text-[1.075rem] leading-[1.85] text-ink-700">
                       {tekst}
@@ -71,19 +80,7 @@ export default function OmOssPage() {
                 ))}
               </div>
 
-              {/* ── Menneskene bak Vertia ──────────────────────────────── */}
-              <Reveal className="mt-20">
-                <h2 className="font-display text-2xl font-medium tracking-[-0.02em] text-ink-900 sm:text-3xl">
-                  Menneskene bak Vertia
-                </h2>
-                <p className="mt-4 max-w-xl leading-relaxed text-ink-500">
-                  Vertia er bygget på praktisk erfaring fra utleie og eiendom. Vi
-                  kjenner utfordringene utleiere møter, fordi vi har jobbet med
-                  dem selv.
-                </p>
-              </Reveal>
-
-              <div className="mt-12 grid gap-12 sm:grid-cols-2 sm:gap-14">
+              <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-14">
                 {team.map((person, i) => (
                   <Reveal key={person.name} delay={i * 0.08}>
                     <article>
@@ -97,9 +94,12 @@ export default function OmOssPage() {
                           style={{ transform: `scale(${person.zoom})` }}
                         />
                       </div>
-                      <h3 className="mt-6 font-sans text-lg font-semibold tracking-[0.01em] text-ink-900">
+                      {/* h2, ikke h3: da den egne «Menneskene bak Vertia»-
+                          overskriften ble sidens h1, ville h3 hoppet over et
+                          nivå. */}
+                      <h2 className="mt-6 font-sans text-lg font-semibold tracking-[0.01em] text-ink-900">
                         {person.name}
-                      </h3>
+                      </h2>
                       <p className="mt-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-accent-500">
                         {person.role}
                       </p>
