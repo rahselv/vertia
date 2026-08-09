@@ -184,11 +184,18 @@ ${SCOPE} .hdr-burger{display:flex;align-items:center;justify-content:center;widt
 ${SCOPE} .hdr-burger:hover{background:rgba(255,255,255,.16)}
 ${SCOPE} .hdr.solid .hdr-burger{color:var(--ink-900)}
 ${SCOPE} .hdr.solid .hdr-burger:hover{background:var(--sand-200)}
-@media(min-width:960px){${SCOPE} .hdr-burger,${SCOPE} .hdr-mob{display:none}}
+/* display MÅ settes eksplisitt her. Mobilmenyen er et <nav>, og designets
+   egen regel «.hdr nav{display:none}» – den som skjuler desktop-navigasjonen
+   under 960 px – traff den også. Uten dette virket hamburgeren (ikonet byttet
+   til X, headeren ble solid), men panelet kom aldri fram, og man kom seg
+   ingen steder på telefon.
+   Selektoren har tre klasser for å slå «.hdr nav», som har to klasser og et
+   element. Skjulingen over 960 px må ha samme vekt. */
+${SCOPE} .hdr .hdr-mob{display:block}
+@media(min-width:960px){${SCOPE} .hdr-burger{display:none}${SCOPE} .hdr .hdr-mob{display:none}}
 ${SCOPE} .hdr-mob{background:rgba(251,248,243,.97);backdrop-filter:blur(10px);border-top:1px solid var(--sand-200)}
 ${SCOPE} .hdr-mob ul{max-width:var(--maxw);margin:0 auto;padding:6px var(--edge) 14px;list-style:none;display:flex;flex-direction:column}
-${SCOPE} .hdr-mob a{display:block;padding:13px 0;font-size:.95rem;font-weight:500;color:var(--ink-700);border-bottom:1px solid var(--sand-200)}
-${SCOPE} .hdr-mob li:last-child a{border-bottom:0}
+${SCOPE} .hdr-mob a{display:block;padding:13px 0;font-size:.95rem;font-weight:500;color:var(--ink-700)}
 ${SCOPE} .hdr-mob a:hover{color:var(--acc)}
 
 /* Kanal-logoer. Designet la disse som inline style-attributter på hver <span>;
@@ -199,6 +206,29 @@ ${SCOPE} .mq-booking i{font-style:normal;font-weight:500;color:#009FE3}
 ${SCOPE} .mq-vrbo{font:700 1.55rem/1 var(--sans);letter-spacing:-.02em;color:#1668E3}
 ${SCOPE} .mq-finn{font:800 1.5rem/1 var(--sans);color:#0063FB}
 ${SCOPE} .mq-finn i{font-style:normal;font-weight:600;color:rgba(0,99,251,.55)}
+
+/* ── Ingen dekorative hårstreker ────────────────────────────────────────────
+   Designet skiller innhold med 1 px linjer nesten overalt. De fjernes; luft
+   og typografi skal gjøre jobben i stedet.
+
+   Dette gjelder streker som KUN skiller eller pynter. Beholdt med vilje:
+   rammene som tegner en boks (priskortene, estimatskjemaet, fremvisnings-
+   scenen), understreker som viser tilstand (aktivt rom, aktiv bolig, hover
+   på lenker) og fokusmarkeringen. De gjør en jobb utover pynt. */
+${SCOPE} .hero-badges li+li::before{display:none}
+${SCOPE} .chan-band{border-bottom:0}
+${SCOPE} .prop .specs{border-top:0;padding-top:6px}
+${SCOPE} .calc-top{border-bottom:0;padding-bottom:8px}
+${SCOPE} .stepsx{border-bottom:0}
+${SCOPE} .stepx{border-top:0}
+${SCOPE} .report dl>div{border-bottom:0}
+${SCOPE} .sp-div{display:none}
+${SCOPE} .tier ul{border-top:0}
+${SCOPE} .tier ul li{border-bottom:0;padding:7px 0}
+${SCOPE} .faq{border-top:0}
+${SCOPE} .faq details{border-bottom:0}
+${SCOPE} .manif-stats>div{border-bottom:0}
+${SCOPE} .ft-bot{border-top:0}
 
 /* ── Tettere rytme ──────────────────────────────────────────────────────────
    Designet er tegnet luftig: seksjoner på opptil 190 px topp og bunn, og

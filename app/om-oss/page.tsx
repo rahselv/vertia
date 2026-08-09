@@ -13,20 +13,6 @@ export const metadata: Metadata = {
 };
 
 /**
- * Ingress over portrettene.
- *
- * Siden hadde tidligere en egen «Teamet bak Vertia»-seksjon øverst med fire
- * avsnitt, etterfulgt av «Menneskene bak Vertia» med portrettene. De to
- * innledningene sa i praksis det samme om erfaring og bakgrunn. Seksjonene er
- * slått sammen til én, og bare de to avsnittene som tilfører noe nytt – hva vi
- * faktisk gjør, og hvordan vi jobber – er beholdt.
- */
-const ingress: string[] = [
-  "Ideen er enkel: du beholder boligen, kontrollen og inntekten, mens vi tar oss av det praktiske. Foto, annonse, prising, gjestekommunikasjon, nøkkelfri innsjekk og vask. Du bestemmer selv hvilke dager boligen er tilgjengelig, og kan alltid holde av dagene du vil bruke den selv.",
-  "Vi er opptatt av å være ryddige og etterrettelige. Ingen skjulte kostnader, tydelige rapporter og en fast kontaktperson som hjelper deg hele veien. Målet er at utleien skal føles trygg og rolig, ikke som enda en jobb.",
-];
-
-/**
  * Menneskene bak Vertia. Hentet fra «Om oss»-modalen i landingsside-v2-designet,
  * men tilpasset full side: større portretter og mer luft enn i modalen.
  *
@@ -70,21 +56,17 @@ export default function OmOssPage() {
                 </h1>
               </Reveal>
 
-              <div className="mt-10 space-y-6">
-                {ingress.map((tekst, i) => (
-                  <Reveal key={i}>
-                    <p className="text-[1.075rem] leading-[1.85] text-ink-700">
-                      {tekst}
-                    </p>
-                  </Reveal>
-                ))}
-              </div>
 
-              <div className="mt-16 grid gap-12 sm:grid-cols-2 sm:gap-14">
+              <div className="mt-12 grid gap-12 sm:grid-cols-2 sm:gap-14">
                 {team.map((person, i) => (
                   <Reveal key={person.name} delay={i * 0.08}>
                     <article>
-                      <div className="relative h-[150px] w-[150px] overflow-hidden rounded-full bg-sand-200 sm:h-[180px] sm:w-[180px]">
+                      {/* rounded-[50%], ikke rounded-full: borderRadius i
+                          tailwind.config.ts kapper alle tokens til maks 4 px
+                          for den skarpkantede retningen, også `full`. Da ble
+                          portrettene firkantede med 4 px hjørner. En vilkårlig
+                          verdi går utenom temaet og gir en ekte sirkel. */}
+                      <div className="relative h-[150px] w-[150px] overflow-hidden rounded-[50%] bg-sand-200 sm:h-[180px] sm:w-[180px]">
                         <Image
                           src={person.image}
                           alt={person.alt}
@@ -112,7 +94,7 @@ export default function OmOssPage() {
               </div>
 
               <Reveal>
-                <p className="mt-14 border-t border-sand-200 pt-8 text-center font-display text-lg italic text-ink-500">
+                <p className="mt-16 text-center font-display text-lg italic text-ink-500">
                   Eiendomserfaring møter praktisk utleie.
                 </p>
               </Reveal>

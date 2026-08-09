@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/#kalkulator", label: "Inntektsestimat" },
   { href: "/#priser", label: "Priser" },
   { href: "/artikler", label: "Artikler" },
+  { href: "/om-oss", label: "Om oss" },
   { href: "/#faq", label: "Ofte stilte spørsmål" },
 ];
 
